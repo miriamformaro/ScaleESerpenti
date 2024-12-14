@@ -1,5 +1,5 @@
 package caselle;
 
 public interface CasellaFactory {
-    public Casella creaCasella(String tipo, int posizione, int fine);
+    public AbstractCasella creaCasella(CaselleSpeciali tipo, int posizione, int fine);
 }
