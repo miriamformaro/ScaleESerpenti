@@ -1,6 +1,6 @@
 package caselle;
 
-import Gioco.Player;
+import partita.Player;
 
 public abstract class AbstractCasella {
     private int posizione;

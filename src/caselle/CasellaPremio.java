@@ -1,8 +1,7 @@
 package caselle;
 
-import Gioco.DadoFactory;
-import Gioco.Player;
-import Gioco.Dado;
+import partita.Player;
+import partita.Dado;
 
 public class CasellaPremio extends AbstractCasella {
     private CaselleSpeciali tipo;

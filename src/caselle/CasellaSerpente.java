@@ -1,6 +1,6 @@
 package caselle;
 
-import Gioco.Player;
+import partita.Player;
 
 public class CasellaSerpente extends AbstractCasella {
     private int coda;

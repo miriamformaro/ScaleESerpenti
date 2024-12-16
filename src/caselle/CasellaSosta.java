@@ -1,6 +1,6 @@
 package caselle;
 
-import Gioco.Player;
+import partita.Player;
 
 public class CasellaSosta extends AbstractCasella {
     private CaselleSpeciali tipo;
