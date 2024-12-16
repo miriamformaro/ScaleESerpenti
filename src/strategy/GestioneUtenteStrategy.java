@@ -1,10 +1,11 @@
-package partita;
+package strategy;
 
 import caselle.CaselleSpeciali;
+import partita.Board;
 
 import java.util.Scanner;
 
-public class GestioneUtenteStrategy implements GestioneBoardStrategy{
+public class GestioneUtenteStrategy implements GestioneBoardStrategy {
     @Override
     public void gestioneBoard(Board board, int numeroCaselle) {
         int numeroSerpenti = ottieniNumero("Quanti serpenti vuoi inserire? ");
