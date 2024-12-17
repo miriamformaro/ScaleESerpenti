@@ -45,10 +45,10 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
             System.out.println("La cima della scala è alla casella: " + cima);
         }
 
-        aggiungiCasella(CaselleSpeciali.PANCHINA, numeroCaselle, board);
-        aggiungiCasella(CaselleSpeciali.LOCANDA, numeroCaselle, board);
-        aggiungiCasella(CaselleSpeciali.DADI, numeroCaselle, board);
-        aggiungiCasella(CaselleSpeciali.MOLLA, numeroCaselle, board);
+        aggiungiCasellaSpeciale(CaselleSpeciali.PANCHINA, numeroCaselle, board);
+        aggiungiCasellaSpeciale(CaselleSpeciali.LOCANDA, numeroCaselle, board);
+        aggiungiCasellaSpeciale(CaselleSpeciali.DADI, numeroCaselle, board);
+        aggiungiCasellaSpeciale(CaselleSpeciali.MOLLA, numeroCaselle, board);
 
         int numCasellePescaUnaCarta = 1+random.nextInt(2);
         System.out.println("Numero caselle pesca una carta: " + numCasellePescaUnaCarta);
@@ -67,7 +67,7 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
         return (pos1/larghezza == pos2/larghezza);
     }
 
-    private void aggiungiCasella(CaselleSpeciali tipo, int numeroCaselle, Board board) {
+    private void aggiungiCasellaSpeciale(CaselleSpeciali tipo, int numeroCaselle, Board board) {
         int pos;
         do {
             pos = random.nextInt(numeroCaselle-1);
