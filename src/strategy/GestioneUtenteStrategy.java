@@ -6,79 +6,73 @@ import partita.Board;
 import java.util.Scanner;
 
 public class GestioneUtenteStrategy implements GestioneBoardStrategy {
+    private Scanner sc = new Scanner(System.in);
     @Override
     public void gestioneBoard(Board board, int numeroCaselle) {
+        int larghezza = (int) Math.ceil(Math.sqrt(numeroCaselle));
         int numeroSerpenti = ottieniNumero("Quanti serpenti vuoi inserire? ");
         for(int i=0; i<numeroSerpenti; i++) {
-            int testa = ottieniPosizione("Inserisci la posizione della testa del serpente: ");
-            int coda = ottieniPosizione("Inserisci la posizione della coda del serpente: ");
-            if(testa > coda && !board.getCaselleUsate().contains(testa) && !board.getCaselleUsate().contains(coda)) {
-                board.aggiungiCasella(CaselleSpeciali.SERPENTE, testa, coda);
-            } else {
-                System.out.println("Impossibile aggiungere il serpente!");
-            }
+            int testa = 0;
+            int coda = 0;
+            do {
+                testa = ottieniPosizione("Inserisci la posizione della testa del serpente: ");
+                coda = ottieniPosizione("Inserisci la posizione della coda del serpente: ");
+
+                if(testa <= coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza)) {
+                    System.out.println("Serpente invalido! Inserirlo in altre posizioni!");
+                }
+            } while(testa <= coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza));
+            board.aggiungiCasella(CaselleSpeciali.SERPENTE, testa, coda);
+            board.getCaselleUsate().add(testa);
+            board.getCaselleUsate().add(coda);
         }
 
         int numeroScale = ottieniNumero("Quanti scale vuoi inserire? ");
         for(int i=0; i<numeroScale; i++) {
-            int inizio = ottieniPosizione("Inserisci la casella di inizio della scala: ");
-            int fine = ottieniPosizione("Inserisci la casella di fine della scala: ");
-            if(fine > inizio && !board.getCaselleUsate().contains(fine) && !board.getCaselleUsate().contains(inizio)) {
-                board.aggiungiCasella(CaselleSpeciali.SCALA, inizio, fine);
-            } else {
-                System.out.println("Impossibile aggiungere la scala!");
-            }
+            int inizio = 0;
+            int fine = 0;
+            do {
+                inizio = ottieniPosizione("Inserisci l'inizio della scala: ");
+                fine = ottieniPosizione("Inserisci la fine della scala: ");
+
+                if(fine <= inizio || board.getCaselleUsate().contains(inizio) || board.getCaselleUsate().contains(fine) || stessaRiga(inizio, fine, larghezza)) {
+                    System.out.println("Scala invalida! Inserirla in altre posizioni!");
+                }
+            } while(fine <= inizio || board.getCaselleUsate().contains(inizio) || board.getCaselleUsate().contains(fine) || stessaRiga(inizio, fine, larghezza));
+            board.aggiungiCasella(CaselleSpeciali.SCALA, inizio, fine);
+            board.getCaselleUsate().add(inizio);
+            board.getCaselleUsate().add(fine);
         }
 
-        int posizionePanchina = ottieniPosizione("In che casella vuoi inserire la panchina? ");
-        if(!board.getCaselleUsate().contains(posizionePanchina)) {
-            board.aggiungiCasella(CaselleSpeciali.PANCHINA, posizionePanchina, 0);
-        } else {
-            System.out.println("Impossibile aggiungere la panchina!");
-        }
-
-        int posizioneLocanda = ottieniPosizione("In che casella vuoi inserire la locanda? ");
-        if(!board.getCaselleUsate().contains(posizioneLocanda)) {
-            board.aggiungiCasella(CaselleSpeciali.LOCANDA, posizioneLocanda, 0);
-        } else {
-            System.out.println("Impossibile aggiungere la locanda!");
-        }
-
-        int posizioneDadi = ottieniPosizione("Dove vuoi inserire la casella dadi? ");
-        if(!board.getCaselleUsate().contains(posizioneDadi)) {
-            board.aggiungiCasella(CaselleSpeciali.DADI, posizioneDadi, 0);
-        } else {
-            System.out.println("Impossibile aggiungere la casella dadi!");
-        }
-
-        int posizioneMolla = ottieniPosizione("Dove vuoi inserire la casella molla? ");
-        if(!board.getCaselleUsate().contains(posizioneMolla)) {
-            board.aggiungiCasella(CaselleSpeciali.MOLLA, posizioneMolla, 0);
-        } else {
-            System.out.println("Impossibile aggiungere la casella molla!");
-        }
-
-        int posizionePescaUnaCarta = ottieniPosizione("Dove vuoi inserire la casella per pescare una carta? ");
-        if(!board.getCaselleUsate().contains(posizionePescaUnaCarta)) {
-            board.aggiungiCasella(CaselleSpeciali.PESCA_UNA_CARTA, posizionePescaUnaCarta, 0);
-        } else {
-            System.out.println("Impossibile aggiungere la casella pesca una carta!");
-        }
+        aggiungi(CaselleSpeciali.PANCHINA, board);
+        aggiungi(CaselleSpeciali.LOCANDA, board);
+        aggiungi(CaselleSpeciali.DADI, board);
+        aggiungi(CaselleSpeciali.MOLLA, board);
+        aggiungi(CaselleSpeciali.PESCA_UNA_CARTA, board);
 
         board.caselleNormali();
     }
 
     private int ottieniNumero(String domanda) {
-        Scanner sc = new Scanner(System.in);
         System.out.print(domanda);
-        int numero = sc.nextInt();
-        return numero;
+        return sc.nextInt();
     }
 
     private int ottieniPosizione(String domanda) {
-        Scanner sc = new Scanner(System.in);
         System.out.print(domanda);
-        int posizione = sc.nextInt();
-        return posizione;
+        return sc.nextInt();
+    }
+
+    private void aggiungi(CaselleSpeciali tipo, Board board) {
+        int pos;
+        do {
+            pos = ottieniPosizione("Inserisci la posizione per la casella " + tipo.toString() + " ");
+        } while (board.getCaselleUsate().contains(pos));
+        board.aggiungiCasella(tipo, pos, 0);
+        board.getCaselleUsate().add(pos);
+    }
+
+    private boolean stessaRiga(int pos1, int pos2, int larghezza) {
+        return (pos1/larghezza == pos2/larghezza);
     }
 }
