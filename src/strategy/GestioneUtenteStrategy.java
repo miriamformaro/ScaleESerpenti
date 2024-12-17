@@ -77,7 +77,7 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
 
     private int ottieniPosizione(String domanda) {
         Scanner sc = new Scanner(System.in);
-        System.out.println(domanda);
+        System.out.print(domanda);
         int posizione = sc.nextInt();
         return posizione;
     }
