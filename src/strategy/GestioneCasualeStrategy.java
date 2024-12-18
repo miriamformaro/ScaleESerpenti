@@ -1,6 +1,5 @@
 package strategy;
 
-import caselle.CasellaNormale;
 import caselle.CaselleSpeciali;
 import partita.Board;
 
