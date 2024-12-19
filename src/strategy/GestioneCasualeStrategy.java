@@ -22,9 +22,10 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
                 testa = random.nextInt(numeroCaselle-1);
                 coda = random.nextInt(testa);
             } while(testa<=coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza));
-            board.getCasellaFactory().creaCasella(CaselleSpeciali.SERPENTE, testa, coda);
+            board.getCaselle()[testa] = board.getCasellaFactory().creaCasella(CaselleSpeciali.SERPENTE, testa, coda);
             board.getCaselleUsate().add(testa);
             board.getCaselleUsate().add(coda);
+            board.aggiungiCasella(CaselleSpeciali.SERPENTE, testa, coda);
             System.out.println("La coda del serpente è alla casella: " + coda);
             System.out.println("La testa del serpente è alla casella: " + testa);
         }
@@ -37,9 +38,10 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
                 cima = random.nextInt(numeroCaselle-1);
                 fine = random.nextInt(cima);
             } while(cima<=fine || board.getCaselleUsate().contains(cima) || board.getCaselleUsate().contains(fine) || stessaRiga(cima, fine, larghezza));
-            board.getCasellaFactory().creaCasella(CaselleSpeciali.SCALA, fine, cima);
+            board.getCaselle()[fine] = board.getCasellaFactory().creaCasella(CaselleSpeciali.SCALA, fine, cima);
             board.getCaselleUsate().add(cima);
             board.getCaselleUsate().add(fine);
+            board.aggiungiCasella(CaselleSpeciali.SCALA, fine, cima);
             System.out.println("La fine della scala è alla casella: " + fine);
             System.out.println("La cima della scala è alla casella: " + cima);
         }
@@ -59,6 +61,7 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
             board.getCaselle()[pos] = board.getCasellaFactory().creaCasella(CaselleSpeciali.PESCA_UNA_CARTA, pos, 0);
             board.getCaselleUsate().add(pos);
             System.out.println("Alla casella " + pos + " si abbiamo pescato una carta " + board.getCaselle()[pos].toString());
+            board.aggiungiCasella(CaselleSpeciali.PESCA_UNA_CARTA, pos, 0);
         }
     }
 
@@ -73,5 +76,6 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
         } while(board.getCaselleUsate().contains(pos));
         board.getCaselle()[pos] = board.getCasellaFactory().creaCasella(tipo, pos, 0);
         System.out.println("La casella " + tipo.toString() + " è stata aggiunta nella posizione: " + pos);
+        board.aggiungiCasella(tipo, pos, 0);
     }
 }
