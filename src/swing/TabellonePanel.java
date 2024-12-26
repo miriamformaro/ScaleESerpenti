@@ -1,7 +1,5 @@
 package swing;
 
-import Observer.Observer;
-import Observer.Subject;
 import caselle.*;
 import partita.Board;
 import partita.Player;

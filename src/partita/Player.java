@@ -1,7 +1,7 @@
 package partita;
 
-import Observer.Observer;
-import Observer.Subject;
+import observer.Observer;
+import observer.Subject;
 import caselle.AbstractCasella;
 
 import java.util.HashSet;
