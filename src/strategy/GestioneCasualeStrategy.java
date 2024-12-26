@@ -1,6 +1,6 @@
 package strategy;
 
-import caselle.CaselleSpeciali;
+import caselle.*;
 import partita.Board;
 
 import java.util.Random;
@@ -10,18 +10,22 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
 
     @Override
     public void gestioneBoard(Board board, int numeroCaselle) {
-        int numeroSerpenti = 2+random.nextInt(3);
-        int numeroScale = 2+random.nextInt(3);
-        int larghezza = (int) Math.ceil(Math.sqrt(numeroCaselle));
+        if (numeroCaselle <= 1) {
+            throw new IllegalArgumentException("Il numero di caselle deve essere maggiore di 1!");
+        }
+
+        int numeroSerpenti = 2+random.nextInt(2);
+        int numeroScale = 2+random.nextInt(2);
+        int larghezza = calcolaLarghezza(numeroCaselle);
 
         System.out.println("Numero di serpenti da inserire: " + numeroSerpenti);
         for(int i = 0; i < numeroSerpenti; i++) {
             int testa;
             int coda;
             do {
-                testa = random.nextInt(numeroCaselle-1);
+                testa = 1+random.nextInt(numeroCaselle-1);
                 coda = random.nextInt(testa);
-            } while(testa<=coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza));
+            } while(testa==0 || testa ==numeroCaselle-1 || coda==0 || coda==numeroCaselle-1 || testa<=coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza));
             board.getCaselle()[testa] = board.getCasellaFactory().creaCasella(CaselleSpeciali.SERPENTE, testa, coda);
             board.getCaselleUsate().add(testa);
             board.getCaselleUsate().add(coda);
@@ -35,7 +39,7 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
             int cima;
             int fine;
             do {
-                cima = random.nextInt(numeroCaselle-1);
+                cima = 1+random.nextInt(numeroCaselle-1);
                 fine = random.nextInt(cima);
             } while(cima<=fine || board.getCaselleUsate().contains(cima) || board.getCaselleUsate().contains(fine) || stessaRiga(cima, fine, larghezza));
             board.getCaselle()[fine] = board.getCasellaFactory().creaCasella(CaselleSpeciali.SCALA, fine, cima);
@@ -77,5 +81,61 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
         board.getCaselle()[pos] = board.getCasellaFactory().creaCasella(tipo, pos, 0);
         System.out.println("La casella " + tipo.toString() + " è stata aggiunta nella posizione: " + pos);
         board.aggiungiCasella(tipo, pos, 0);
+    }
+
+    /* private boolean esisteSerpenteNellaStessaRiga(int coda, int testa, int larghezza, Board board) {
+        for (Integer pos : board.getCaselleUsate()) {
+            AbstractCasella casella = board.getCasella(pos);
+
+            // Verifica se la casella è una Scala
+            if (casella != null && casella.getTipo()==CaselleSpeciali.SERPENTE) {
+                CasellaSerpente serpente = (CasellaSerpente) casella;
+
+                // Ottieni le posizioni di "cima" e "fine" della Scala esistente
+                int codaSerpenteEsistente = serpente.getCoda();
+                int testaSerpenteEsistente = serpente.getTesta();
+
+                // Controlla se la nuova cima o fine è sulla stessa riga della cima o fine esistente
+                if (stessaRiga(coda, testaSerpenteEsistente, larghezza) ||
+                        stessaRiga(coda, codaSerpenteEsistente, larghezza) ||
+                        stessaRiga(testa, testaSerpenteEsistente, larghezza) ||
+                        stessaRiga(testa, codaSerpenteEsistente, larghezza)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean esisteScalaNellaStessaRiga(int fine, int cima, int larghezza, Board board) {
+        for (Integer pos : board.getCaselleUsate()) {
+            AbstractCasella casella = board.getCasella(pos);
+
+            // Verifica se la casella è una Scala
+            if (casella != null && casella.getTipo()==CaselleSpeciali.SCALA) {
+                CasellaScala scala = (CasellaScala) casella;
+
+                // Ottieni le posizioni di "cima" e "fine" della Scala esistente
+                int cimaScalaEsistente = scala.getFine();
+                int fineScalaEsistente = scala.getInizio();
+
+                // Controlla se la nuova cima o fine è sulla stessa riga della cima o fine esistente
+                if (stessaRiga(fine, cimaScalaEsistente, larghezza) ||
+                        stessaRiga(fine, fineScalaEsistente, larghezza) ||
+                        stessaRiga(cima, cimaScalaEsistente, larghezza) ||
+                        stessaRiga(cima, fineScalaEsistente, larghezza)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    } */
+
+    private int calcolaLarghezza(int numeroCaselle) {
+        int num = (int) Math.sqrt(numeroCaselle); // Partiamo dalla radice quadrata
+        while (numeroCaselle % num != 0) {
+            num++; // Trova il primo valore che divide esattamente numeroCaselle
+        }
+        return numeroCaselle/num;
     }
 }
