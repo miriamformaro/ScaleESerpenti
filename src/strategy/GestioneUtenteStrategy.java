@@ -1,22 +1,44 @@
 package strategy;
 
+import caselle.CasellaScala;
+import caselle.CasellaSerpente;
 import caselle.CaselleSpeciali;
 import partita.Board;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class GestioneUtenteStrategy implements GestioneBoardStrategy {
     private Scanner sc = new Scanner(System.in);
+    private List<CasellaSerpente> listaSerpenti;
+    private List<CasellaScala> listaScale;
+    private int panchina;
+    private int locanda;
+    private int dadi;
+    private int molla;
+    private int pescaUnaCarta;
+
+    public GestioneUtenteStrategy(List<CasellaSerpente> listaSerpenti, List<CasellaScala> listaScale, int panchina, int locanda, int dadi, int molla, int pescaUnaCarta) {
+        this.listaSerpenti = new LinkedList<>(listaSerpenti);
+        this.listaScale = new LinkedList<>(listaScale);
+        this.panchina = panchina;
+        this.locanda = locanda;
+        this.dadi = dadi;
+        this.molla = molla;
+        this.pescaUnaCarta = pescaUnaCarta;
+    }
+
     @Override
     public void gestioneBoard(Board board, int numeroCaselle) {
         int larghezza = (int) Math.ceil(Math.sqrt(numeroCaselle));
-        int numeroSerpenti = ottieniNumero("Quanti serpenti vuoi inserire? ");
-        for(int i=0; i<numeroSerpenti; i++) {
-            int testa = 0;
-            int coda = 0;
+        //int numeroSerpenti = ottieniNumero("Quanti serpenti vuoi inserire? ");
+        for(int i=0; i<listaSerpenti.size(); i++) {
+            int testa;
+            int coda;
             do {
-                testa = ottieniPosizione("Inserisci la posizione della testa del serpente: ");
-                coda = ottieniPosizione("Inserisci la posizione della coda del serpente: ");
+                testa = listaSerpenti.get(i).getTesta();
+                coda = listaSerpenti.get(i).getCoda();
 
                 if(testa <= coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza)) {
                     System.out.println("Serpente invalido! Inserirlo in altre posizioni!");
@@ -27,13 +49,13 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
             board.getCaselleUsate().add(coda);
         }
 
-        int numeroScale = ottieniNumero("Quanti scale vuoi inserire? ");
-        for(int i=0; i<numeroScale; i++) {
-            int inizio = 0;
-            int fine = 0;
+        //int numeroScale = ottieniNumero("Quanti scale vuoi inserire? ");
+        for(int i=0; i<listaScale.size(); i++) {
+            int inizio;
+            int fine;
             do {
-                inizio = ottieniPosizione("Inserisci l'inizio della scala: ");
-                fine = ottieniPosizione("Inserisci la fine della scala: ");
+                inizio = listaScale.get(i).getInizio();
+                fine = listaScale.get(i).getFine();
 
                 if(fine <= inizio || board.getCaselleUsate().contains(inizio) || board.getCaselleUsate().contains(fine) || stessaRiga(inizio, fine, larghezza)) {
                     System.out.println("Scala invalida! Inserirla in altre posizioni!");
@@ -44,13 +66,13 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
             board.getCaselleUsate().add(fine);
         }
 
-        aggiungi(CaselleSpeciali.PANCHINA, board);
-        aggiungi(CaselleSpeciali.LOCANDA, board);
-        aggiungi(CaselleSpeciali.DADI, board);
-        aggiungi(CaselleSpeciali.MOLLA, board);
-        aggiungi(CaselleSpeciali.PESCA_UNA_CARTA, board);
+        aggiungi(CaselleSpeciali.PANCHINA, board, panchina);
+        aggiungi(CaselleSpeciali.LOCANDA, board, locanda);
+        aggiungi(CaselleSpeciali.DADI, board, dadi);
+        aggiungi(CaselleSpeciali.MOLLA, board, molla);
+        aggiungi(CaselleSpeciali.PESCA_UNA_CARTA, board, pescaUnaCarta);
 
-        board.caselleNormali();
+        //board.caselleNormali();
     }
 
     private int ottieniNumero(String domanda) {
@@ -63,10 +85,10 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
         return sc.nextInt();
     }
 
-    private void aggiungi(CaselleSpeciali tipo, Board board) {
+    private void aggiungi(CaselleSpeciali tipo, Board board, int posizione) {
         int pos;
         do {
-            pos = ottieniPosizione("Inserisci la posizione per la casella " + tipo.toString() + " ");
+            pos = posizione;
         } while (board.getCaselleUsate().contains(pos));
         board.aggiungiCasella(tipo, pos, 0);
         board.getCaselleUsate().add(pos);

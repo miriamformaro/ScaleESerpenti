@@ -26,4 +26,8 @@ public class CasellaScala extends AbstractCasella {
         player.setPosizione(fine);
         System.out.println("Nuova posizione: " + fine);
     }
+
+    public CaselleSpeciali getTipo() {
+        return CaselleSpeciali.SCALA;
+    }
 }

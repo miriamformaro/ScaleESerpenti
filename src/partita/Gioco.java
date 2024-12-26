@@ -1,5 +1,7 @@
 package partita;
 
+import caselle.CasellaScala;
+import caselle.CasellaSerpente;
 import strategy.GestioneBoardStrategy;
 import strategy.GestioneCasualeStrategy;
 import strategy.GestioneUtenteStrategy;
@@ -43,10 +45,42 @@ public class Gioco {
         System.out.print("Vuoi usare la strategia casuale o utente? ");
         GestioneBoardStrategy strategy = null;
         Board board = null;
+
         if(sc.next().equals("casuale")) {
             strategy = new GestioneCasualeStrategy();
         } else {
-            strategy = new GestioneUtenteStrategy();
+            List<CasellaSerpente> listaSerpente = new LinkedList<>();
+            System.out.print("Quanti serpenti vuoi inserire? ");
+            int numeroSerpenti = sc.nextInt();
+            for(int i=0; i < numeroSerpenti; i++) {
+                System.out.print("Inserisci la testa del serpente: ");
+                int testa = sc.nextInt();
+                System.out.print("Inserisci la coda del serpente: ");
+                int coda = sc.nextInt();
+                listaSerpente.add(new CasellaSerpente(testa, coda));
+            }
+
+            List<CasellaScala> listaScala = new LinkedList<>();
+            System.out.print("Quante scale vuoi inserire? ");
+            int numeroScale = sc.nextInt();
+            for(int i=0; i < numeroSerpenti; i++) {
+                System.out.print("Inserisci la fine di una scala: ");
+                int fine = sc.nextInt();
+                System.out.print("Inserisci la cima di una scala: ");
+                int cima = sc.nextInt();
+                listaScala.add(new CasellaScala(fine, cima));
+            }
+            System.out.print("Inserisci la posizione della casella panchina: ");
+            int panchina = sc.nextInt();
+            System.out.print("Inserisci la posizione della casella locanda: ");
+            int locanda = sc.nextInt();
+            System.out.print("Inserisci la posizione della casella dadi: ");
+            int dadi = sc.nextInt();
+            System.out.print("Inserisci la posizione della casella molla: ");
+            int molla = sc.nextInt();
+            System.out.println("Inserisci la posizione della casella pesca una carta: ");
+            int pescaUnaCarta = sc.nextInt();
+            strategy = new GestioneUtenteStrategy(listaSerpente, listaScala, panchina, locanda, dadi, molla, pescaUnaCarta);
         }
 
         board = new Board(100, strategy);

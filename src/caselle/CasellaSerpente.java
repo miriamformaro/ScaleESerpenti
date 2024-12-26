@@ -29,4 +29,8 @@ public class CasellaSerpente extends AbstractCasella {
         player.setPosizione(coda);
         System.out.println("Nuova posizione: " + coda);
     }
+
+    public CaselleSpeciali getTipo() {
+        return CaselleSpeciali.SERPENTE;
+    }
 }

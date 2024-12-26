@@ -495,6 +495,10 @@ public class DialogConfiguration extends JFrame{
         return this.numeroGiocatori;
     }
 
+    public int getNumeroDadi() {
+        return Integer.parseInt(comboNumeroDiDadi.getSelectedItem().toString());
+    }
+
     public boolean getUnDado() {
         return this.unDado;
     }

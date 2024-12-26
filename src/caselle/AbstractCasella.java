@@ -23,4 +23,10 @@ public abstract class AbstractCasella {
     }
 
     public abstract void esegui(Player p);
+    public abstract CaselleSpeciali getTipo();
+
+    @Override
+    public String toString() {
+        return CaselleSpeciali.values().toString();
+    }
 }

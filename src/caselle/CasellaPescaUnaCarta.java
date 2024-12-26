@@ -20,6 +20,7 @@ public class CasellaPescaUnaCarta extends AbstractCasella{
 
     @Override
     public void esegui(Player p) {
+        System.out.println("Il giocatore si trova su una casella 'Pesca una carta', ha pescato la carta: " + tipo);
         if(tipo==CaselleSpeciali.PANCHINA || tipo==CaselleSpeciali.LOCANDA) {
             casellaSosta.esegui(p);
         } else if(tipo==CaselleSpeciali.DADI || tipo==CaselleSpeciali.MOLLA) {

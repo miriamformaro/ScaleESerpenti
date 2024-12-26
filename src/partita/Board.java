@@ -2,7 +2,6 @@ package partita;
 
 import caselle.AbstractCasella;
 import caselle.Casella;
-import caselle.CasellaNormale;
 import caselle.CaselleSpeciali;
 import strategy.GestioneBoardStrategy;
 
@@ -30,14 +29,6 @@ public class Board {
             caselleUsate.add(posizione);
         }
     }
-
-   public void caselleNormali() {
-        for(int i = 0; i < caselle.length; i++) {
-            if(caselle[i] == null) {
-                caselle[i] = new CasellaNormale(i);
-            }
-        }
-   }
 
     public int getUltimaCasella() {
         return caselle.length - 1;  // Ultima casella del tabellone

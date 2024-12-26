@@ -12,5 +12,10 @@ public class CasellaNormale extends AbstractCasella {
         System.out.println("La casella è semplice!");
     }
 
+    @Override
+    public CaselleSpeciali getTipo() {
+        return null;
+    }
+
 
 }

@@ -5,6 +5,7 @@ import partita.Dado;
 
 public class CasellaPremio extends AbstractCasella {
     private CaselleSpeciali tipo;
+    private int avanzamento = 0;
 
     public CasellaPremio(int posizione, CaselleSpeciali tipo) {
         super(posizione);
@@ -18,8 +19,9 @@ public class CasellaPremio extends AbstractCasella {
         Dado dado = p.getD();
         if(tipo==CaselleSpeciali.DADI) {
             System.out.println("Il giocatore è finito sulla casella premio 'DADI' farà un altro turno, rilancia i dadi!");
-            int avanzamento = dado.eseguiLancio();
-            p.setPosizione(p.getPosizione() + avanzamento);
+            avanzamento = dado.eseguiLancio();
+            int nuovaPosizione = p.getPosizione() + avanzamento;
+            p.setPosizione(nuovaPosizione);
             System.out.println("Il giocatore avanzerà di " + avanzamento + " caselle!");
             System.out.println("Nuova posizione: " + p.getPosizione());
         } else if(tipo==CaselleSpeciali.MOLLA) {
@@ -31,4 +33,7 @@ public class CasellaPremio extends AbstractCasella {
             }
         }
     }
+
+    public int getAvanzamento() { return avanzamento; }
+
 }
