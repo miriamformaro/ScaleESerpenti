@@ -207,7 +207,7 @@ public class GUI extends JFrame implements Observer {
                 JLabel pedina = pedine.get(turnoCorrente);
 
                 try {
-                    TimeUnit.SECONDS.sleep(0);
+                    TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }

@@ -415,79 +415,117 @@ public class DialogConfiguration extends JFrame{
     }
 
     private void avviaGioco() {
-
-
-        numeroGiocatori = Integer.parseInt(textFieldGiocatori.getText());
-        if(numeroGiocatori<=1) {
-            throw new NumberFormatException("Numero giocatori invalido");
-        }
-
-        numeroCaselle = Integer.parseInt(textFieldCaselle.getText());
-        if(numeroCaselle<=1) {
-            throw new NumberFormatException("Numero caselle invalido");
-        }
-
-        int numeroDadi = Integer.parseInt(comboNumeroDiDadi.getSelectedItem().toString());
-        if(numeroDadi==1) {
-            unDado = true;
-        } else {
-            unDado = false;
-        }
-
-        int numeroSerpenti = Integer.parseInt(serpenti.getSelectedItem().toString());
-        List<CasellaSerpente> listaSerpenti = new LinkedList<>();
-        if (serpenti.isEnabled()) {
-            for (int i = 0; i < numeroSerpenti; i++) {
-                int testa = Integer.parseInt(listaPosizioneTestaSerpente.get(i).getText());
-                int coda = Integer.parseInt(listaPosizioneCodaSerpente.get(i).getText());
-                listaSerpenti.add(new CasellaSerpente(testa, coda));
+        try {
+            numeroGiocatori = Integer.parseInt(textFieldGiocatori.getText());
+            if (numeroGiocatori < 1 || numeroGiocatori > 6) {
+                JOptionPane.showMessageDialog(dialog,
+                        "Il numero di giocatori deve essere compreso tra 1 e 6!", "Errore", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-        }
 
-        int numeroScale = Integer.parseInt(scale.getSelectedItem().toString());
-        List<CasellaScala> listaScale = new LinkedList<>();
-
-        if (scale.isEnabled()) {
-            for (int i = 0; i < numeroScale; i++) {
-                int base = Integer.parseInt(listaPosizioneFineScala.get(i).getText());
-                int cima = Integer.parseInt(listaPosizioneCimaScala.get(i).getText());
-                listaScale.add(new CasellaScala(base, cima));
+            numeroCaselle = Integer.parseInt(textFieldCaselle.getText());
+            if (numeroCaselle <= 1 || numeroCaselle > 500) {
+                JOptionPane.showMessageDialog(dialog,
+                        "Il numero di caselle deve essere compreso tra 1 e 500!", "Errore", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            int numeroDadi = Integer.parseInt(comboNumeroDiDadi.getSelectedItem().toString());
+            unDado = numeroDadi == 1;
+
+            int numeroSerpenti = Integer.parseInt(serpenti.getSelectedItem().toString());
+            List<CasellaSerpente> listaSerpenti = new LinkedList<>();
+            if (serpenti.isEnabled()) {
+                for (int i = 0; i < numeroSerpenti; i++) {
+                    int testa = Integer.parseInt(listaPosizioneTestaSerpente.get(i).getText());
+                    int coda = Integer.parseInt(listaPosizioneCodaSerpente.get(i).getText());
+                    if (testa > numeroCaselle || coda > numeroCaselle) {
+                        JOptionPane.showMessageDialog(dialog, "Errore: La testa o la coda del serpente non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Serpente!", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (coda >= testa) {
+                        JOptionPane.showMessageDialog(dialog, "Errore: La coda del serpente deve essere in una posizione inferiore rispetto alla testa!", "Errore Posizione Serpente!", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    listaSerpenti.add(new CasellaSerpente(testa, coda));
+                }
+            }
+
+            int numeroScale = Integer.parseInt(scale.getSelectedItem().toString());
+            List<CasellaScala> listaScale = new LinkedList<>();
+            if (scale.isEnabled()) {
+                for (int i = 0; i < numeroScale; i++) {
+                    int base = Integer.parseInt(listaPosizioneFineScala.get(i).getText());
+                    int cima = Integer.parseInt(listaPosizioneCimaScala.get(i).getText());
+                    if (base > numeroCaselle || cima > numeroCaselle) {
+                        JOptionPane.showMessageDialog(dialog, "Errore: La base o la cima della scala non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Scala!", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (base >= cima) {
+                        JOptionPane.showMessageDialog(dialog, "Errore: La base della scala deve essere in una posizione inferiore rispetto alla cima!", "Errore Posizione Scala!", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    listaScale.add(new CasellaScala(base, cima));
+                }
+            }
+
+            if (posizionePanchina.isEnabled()) {
+                panchina = Integer.parseInt(posizionePanchina.getText());
+                if (panchina > numeroCaselle) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della panchina non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Panchina!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            if (posizioneLocanda.isEnabled()) {
+                locanda = Integer.parseInt(posizioneLocanda.getText());
+                if (locanda > numeroCaselle) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della locanda non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Locanda!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            if (posizioneDadi.isEnabled()) {
+                dadi = Integer.parseInt(posizioneDadi.getText());
+                if (dadi > numeroCaselle) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della casella 'DADI' non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            if (posizioneMolla.isEnabled()) {
+                molla = Integer.parseInt(posizioneMolla.getText());
+                if (molla > numeroCaselle) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della casella 'MOLLA' non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Casella Molla!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            if (posizionePescaUnaCarta.isEnabled()) {
+                pescaUnaCarta = Integer.parseInt(posizionePescaUnaCarta.getText());
+                if (pescaUnaCarta > numeroCaselle) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della casella 'PESCA UNA CARTA' non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Casella Pesca Una Carta!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            GestioneBoardStrategy strategy;
+            if (comboStrategia.getSelectedItem().toString().equals("utente")) {
+                strategy = new GestioneUtenteStrategy(listaSerpenti, listaScale, panchina, locanda, dadi, molla, pescaUnaCarta);
+            } else {
+                strategy = new GestioneCasualeStrategy();
+            }
+
+            board = new Board(numeroCaselle, strategy);
+            board.applicaStrategia();
+            getContentPane().removeAll();
+
+            dialog.dispose();
+            ((GUI) parentFrame).avviaPartita(board);
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(dialog, "Inserisci valori validi per tutti i campi richiesti.", "Errore", JOptionPane.ERROR_MESSAGE);
         }
-
-        if(posizionePanchina.isEnabled()) {
-            panchina = Integer.parseInt(posizionePanchina.getText());
-        }
-
-        if(posizioneLocanda.isEnabled()) {
-            locanda = Integer.parseInt(posizioneLocanda.getText());
-        }
-
-        if(posizioneDadi.isEnabled()) {
-            dadi = Integer.parseInt(posizioneDadi.getText());
-        }
-
-        if(posizioneMolla.isEnabled()) {
-            molla = Integer.parseInt(posizioneMolla.getText());
-        }
-
-        if(posizionePescaUnaCarta.isEnabled()) {
-            pescaUnaCarta = Integer.parseInt(posizionePescaUnaCarta.getText());
-        }
-
-        GestioneBoardStrategy strategy;
-        if(comboStrategia.getSelectedItem().toString().equals("utente")) {
-            strategy = new GestioneUtenteStrategy(listaSerpenti, listaScale, panchina, locanda, dadi, molla, pescaUnaCarta);
-        } else {
-            strategy = new GestioneCasualeStrategy();
-        }
-
-        board = new Board(numeroCaselle, strategy);
-        board.applicaStrategia();
-        getContentPane().removeAll();
-
-        dialog.dispose();
-        ((GUI) parentFrame).avviaPartita(board);
 
     }
 
