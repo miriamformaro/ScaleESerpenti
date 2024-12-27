@@ -24,7 +24,7 @@ public class Board {
     }
 
     public void aggiungiCasella(CaselleSpeciali tipo, int posizione, int fine) {
-        if(posizione > 0 && posizione < caselle.length && !caselleUsate.contains(posizione)) {
+        if(posizione > 0 && posizione < caselle.length-1 && !caselleUsate.contains(posizione)) {
             caselle[posizione] = casellaFactory.creaCasella(tipo, posizione, fine);
             caselleUsate.add(posizione);
         }
