@@ -15,6 +15,8 @@ public class Player implements Subject {
     private int avanzo = 0;
     private int mettereCartaDaParte = 0;
     private Set<Observer> observers;
+    private int avanzoDado = 0;
+    private int posizioneIniziale;
 
     public Player(int id, boolean unDado) {
         this.id = id;
@@ -52,6 +54,7 @@ public class Player implements Subject {
 
 
     private void spostaPlayer(Board board) {
+        this.setPosizioneIniziale(this.posizione);
         int avanzamento = 0;
 
         // Se il giocatore è fuori dal tabellone (posizione == -1), al primo lancio avanza come dal dado
@@ -73,9 +76,9 @@ public class Player implements Subject {
 
             if(avanzamento == 12) {
                 System.out.println("Il giocatore " + id + " ha fatto un doppio 6, ha diritto ad un altro turno");
-                int av = d.eseguiLancio();
-                System.out.println("Il giocatore " + id + " deve avanzare di " + av + " caselle!");
-                this.posizione += av;
+                avanzoDado = d.eseguiLancio();
+                System.out.println("Il giocatore " + id + " deve avanzare di " + avanzoDado + " caselle!");
+                this.posizione += avanzoDado;
                 System.out.println("Il giocatore " + id + " è arrivato alla casella " + posizione);
             }
         }
@@ -139,6 +142,18 @@ public class Player implements Subject {
 
     public Dado getD() {
         return d;
+    }
+
+    public int getAvanzoDado() {
+        return avanzoDado;
+    }
+
+    public int getPosizioneIniziale() {
+        return posizioneIniziale;
+    }
+
+    public void setPosizioneIniziale(int posizioneIniziale) {
+        this.posizioneIniziale = posizioneIniziale;
     }
 }
 
