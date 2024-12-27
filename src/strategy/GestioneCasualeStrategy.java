@@ -23,9 +23,9 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
             int testa;
             int coda;
             do {
-                testa = 1+random.nextInt(numeroCaselle-1);
+                testa = 1+random.nextInt(numeroCaselle-2);
                 coda = random.nextInt(testa);
-            } while(testa==0 || testa ==numeroCaselle-1 || coda==0 || coda==numeroCaselle-1 || testa<=coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza));
+            } while(testa<=coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza));
             board.getCaselle()[testa] = board.getCasellaFactory().creaCasella(CaselleSpeciali.SERPENTE, testa, coda);
             board.getCaselleUsate().add(testa);
             board.getCaselleUsate().add(coda);
@@ -39,9 +39,9 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
             int cima;
             int fine;
             do {
-                cima = 1+random.nextInt(numeroCaselle-1);
-                fine = random.nextInt(cima);
-            } while(cima<=fine || board.getCaselleUsate().contains(cima) || board.getCaselleUsate().contains(fine) || stessaRiga(cima, fine, larghezza));
+                cima = 1+random.nextInt(numeroCaselle-2);
+                fine = 1+random.nextInt(cima);
+            } while(cima<=fine || board.getCaselleUsate().contains(cima) || board.getCaselleUsate().contains(fine)|| stessaRiga(cima, fine, larghezza));
             board.getCaselle()[fine] = board.getCasellaFactory().creaCasella(CaselleSpeciali.SCALA, fine, cima);
             board.getCaselleUsate().add(cima);
             board.getCaselleUsate().add(fine);
@@ -61,7 +61,7 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
             int pos;
             do {
                 pos = random.nextInt(numeroCaselle-1);
-            } while(board.getCaselleUsate().contains(pos));
+            } while(board.getCaselleUsate().contains(pos) || pos==0 || pos == numeroCaselle-1);
             board.getCaselle()[pos] = board.getCasellaFactory().creaCasella(CaselleSpeciali.PESCA_UNA_CARTA, pos, 0);
             board.getCaselleUsate().add(pos);
             System.out.println("Alla casella " + pos + " si abbiamo pescato una carta " + board.getCaselle()[pos].toString());
@@ -77,59 +77,11 @@ public class GestioneCasualeStrategy implements GestioneBoardStrategy {
         int pos;
         do {
             pos = random.nextInt(numeroCaselle-1);
-        } while(board.getCaselleUsate().contains(pos));
+        } while(board.getCaselleUsate().contains(pos) || pos==0 || pos==numeroCaselle-1);
         board.getCaselle()[pos] = board.getCasellaFactory().creaCasella(tipo, pos, 0);
         System.out.println("La casella " + tipo.toString() + " è stata aggiunta nella posizione: " + pos);
         board.aggiungiCasella(tipo, pos, 0);
     }
-
-    /* private boolean esisteSerpenteNellaStessaRiga(int coda, int testa, int larghezza, Board board) {
-        for (Integer pos : board.getCaselleUsate()) {
-            AbstractCasella casella = board.getCasella(pos);
-
-            // Verifica se la casella è una Scala
-            if (casella != null && casella.getTipo()==CaselleSpeciali.SERPENTE) {
-                CasellaSerpente serpente = (CasellaSerpente) casella;
-
-                // Ottieni le posizioni di "cima" e "fine" della Scala esistente
-                int codaSerpenteEsistente = serpente.getCoda();
-                int testaSerpenteEsistente = serpente.getTesta();
-
-                // Controlla se la nuova cima o fine è sulla stessa riga della cima o fine esistente
-                if (stessaRiga(coda, testaSerpenteEsistente, larghezza) ||
-                        stessaRiga(coda, codaSerpenteEsistente, larghezza) ||
-                        stessaRiga(testa, testaSerpenteEsistente, larghezza) ||
-                        stessaRiga(testa, codaSerpenteEsistente, larghezza)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean esisteScalaNellaStessaRiga(int fine, int cima, int larghezza, Board board) {
-        for (Integer pos : board.getCaselleUsate()) {
-            AbstractCasella casella = board.getCasella(pos);
-
-            // Verifica se la casella è una Scala
-            if (casella != null && casella.getTipo()==CaselleSpeciali.SCALA) {
-                CasellaScala scala = (CasellaScala) casella;
-
-                // Ottieni le posizioni di "cima" e "fine" della Scala esistente
-                int cimaScalaEsistente = scala.getFine();
-                int fineScalaEsistente = scala.getInizio();
-
-                // Controlla se la nuova cima o fine è sulla stessa riga della cima o fine esistente
-                if (stessaRiga(fine, cimaScalaEsistente, larghezza) ||
-                        stessaRiga(fine, fineScalaEsistente, larghezza) ||
-                        stessaRiga(cima, cimaScalaEsistente, larghezza) ||
-                        stessaRiga(cima, fineScalaEsistente, larghezza)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    } */
 
     private int calcolaLarghezza(int numeroCaselle) {
         int num = (int) Math.sqrt(numeroCaselle); // Partiamo dalla radice quadrata

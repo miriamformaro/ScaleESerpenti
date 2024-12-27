@@ -75,16 +75,6 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
         //board.caselleNormali();
     }
 
-    private int ottieniNumero(String domanda) {
-        System.out.print(domanda);
-        return sc.nextInt();
-    }
-
-    private int ottieniPosizione(String domanda) {
-        System.out.print(domanda);
-        return sc.nextInt();
-    }
-
     private void aggiungi(CaselleSpeciali tipo, Board board, int posizione) {
         int pos;
         do {
