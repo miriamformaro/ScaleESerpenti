@@ -43,28 +43,28 @@ public class GUI extends JFrame implements Observer {
             if (dialog.getUnDado()) {
                 messaggioTurno.append("\nDado: ").append(player.getD().getDado1()).append("\n");
             } else {
-                messaggioTurno.append("\nDado1: ").append(player.getD().getDado1())
-                        .append(", Dado2: ").append(player.getD().getDado2()).append("\n");
+                if(player.getPosizioneIniziale()>=tabellonePanel.getBoard().getLenght()-6) {
+                    messaggioTurno.append("\nDado: ").append(player.getD().getDado1()).append("\n");
+                } else {
+                    messaggioTurno.append("\nDado1: ").append(player.getD().getDado1()).append(", Dado2: ").append(player.getD().getDado2()).append("\n");
+                }
             }
 
             // Messaggio posizione iniziale
             int posizione = player.getPosizione();
-            messaggioTurno.append("Giocatore ").append(player.getId() + 1)
-                    .append(" è arrivato sulla casella ").append(posizione + 1).append("\n");
+            messaggioTurno.append("Giocatore ").append(player.getId() + 1).append(" è arrivato sulla casella ").append(posizione + 1).append("\n");
 
             // Sincronizza movimenti e messaggi per eventuali azioni a catena
             sincronizzaMovimenti(player, messaggioTurno);
 
             // Controllo di vittoria o superamento
             if ((posizione + 1) == (tabellonePanel.getBoard().getUltimaCasella() + 1)) {
-                messaggioTurno.append("\nIl giocatore ").append(player.getId() + 1).append(" ha vinto!");
+                messaggioTurno.append("Il giocatore ").append(player.getId() + 1).append(" ha vinto!");
             } else if ((posizione + 1) > tabellonePanel.getBoard().getUltimaCasella()) {
                 int overflow = (posizione + 1) - tabellonePanel.getBoard().getUltimaCasella();
                 posizione = 1 + (tabellonePanel.getBoard().getUltimaCasella() - overflow);
                 player.setPosizione(posizione);
-                messaggioTurno.append("\nIl giocatore ").append(player.getId() + 1)
-                        .append(" deve indietreggiare di ").append(overflow)
-                        .append(" caselle e arriva alla casella ").append(posizione + 1).append("\n");
+                messaggioTurno.append("Il giocatore ").append(player.getId() + 1).append(" deve indietreggiare di ").append(overflow).append(" caselle e arriva alla casella ").append(posizione + 1).append("\n");
             }
 
             // Aggiungi il messaggio all'area di testo
