@@ -11,8 +11,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class DialogConfiguration extends JFrame{
     private JFrame parentFrame;
@@ -435,6 +437,7 @@ public class DialogConfiguration extends JFrame{
 
             int numeroSerpenti = Integer.parseInt(serpenti.getSelectedItem().toString());
             List<CasellaSerpente> listaSerpenti = new LinkedList<>();
+            Set<Integer> posizioniUsate = new HashSet<>();
             if (serpenti.isEnabled()) {
                 for (int i = 0; i < numeroSerpenti; i++) {
                     int testa = Integer.parseInt(listaPosizioneTestaSerpente.get(i).getText());
@@ -447,6 +450,12 @@ public class DialogConfiguration extends JFrame{
                         JOptionPane.showMessageDialog(dialog, "Errore: La coda del serpente deve essere in una posizione inferiore rispetto alla testa!", "Errore Posizione Serpente!", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
+                    if(posizioniUsate.contains(coda) || posizioniUsate.contains(testa)) {
+                        JOptionPane.showMessageDialog(dialog, "Errore: Due elementi non possono occupare la stessa posizione sulla tabella!", "Errore Posizioni Duplicate!", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    posizioniUsate.add(coda);
+                    posizioniUsate.add(testa);
                     listaSerpenti.add(new CasellaSerpente(testa, coda));
                 }
             }
@@ -465,6 +474,13 @@ public class DialogConfiguration extends JFrame{
                         JOptionPane.showMessageDialog(dialog, "Errore: La base della scala deve essere in una posizione inferiore rispetto alla cima!", "Errore Posizione Scala!", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
+
+                    if(posizioniUsate.contains(base) || posizioniUsate.contains(cima)) {
+                        JOptionPane.showMessageDialog(dialog, "Errore: Due elementi non possono occupare la stessa posizione sulla tabella!", "Errore Posizioni Duplicate!", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    posizioniUsate.add(base);
+                    posizioniUsate.add(cima);
                     listaScale.add(new CasellaScala(base, cima));
                 }
             }
@@ -475,12 +491,22 @@ public class DialogConfiguration extends JFrame{
                     JOptionPane.showMessageDialog(dialog, "Errore: La posizione della panchina non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Panchina!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                if (posizioniUsate.contains(panchina)) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: Due elementi non possono occupare la stessa posizione sulla tabella!", "Errore Posizioni Duplicate!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
 
             if (posizioneLocanda.isEnabled()) {
                 locanda = Integer.parseInt(posizioneLocanda.getText());
                 if (locanda > numeroCaselle) {
                     JOptionPane.showMessageDialog(dialog, "Errore: La posizione della locanda non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Locanda!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if(posizioniUsate.contains(locanda)) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: Due elementi non possono occupare la stessa posizione sulla tabella!", "Errore Posizioni Duplicate!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -491,6 +517,10 @@ public class DialogConfiguration extends JFrame{
                     JOptionPane.showMessageDialog(dialog, "Errore: La posizione della casella 'DADI' non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                if(posizioniUsate.contains(dadi)) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: Due elementi non possono occupare la stessa posizione sulla tabella!", "Errore Posizioni Duplicate!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
 
             if (posizioneMolla.isEnabled()) {
@@ -499,12 +529,20 @@ public class DialogConfiguration extends JFrame{
                     JOptionPane.showMessageDialog(dialog, "Errore: La posizione della casella 'MOLLA' non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Casella Molla!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                if(posizioniUsate.contains(molla)) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: Due elementi non possono occupare la stessa posizione sulla tabella!", "Errore Posizioni Duplicate!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
 
             if (posizionePescaUnaCarta.isEnabled()) {
                 pescaUnaCarta = Integer.parseInt(posizionePescaUnaCarta.getText());
                 if (pescaUnaCarta > numeroCaselle) {
                     JOptionPane.showMessageDialog(dialog, "Errore: La posizione della casella 'PESCA UNA CARTA' non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Casella Pesca Una Carta!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if(posizioniUsate.contains(pescaUnaCarta)) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: Due elementi non possono occupare la stessa posizione sulla tabella!", "Errore Posizioni Duplicate!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
