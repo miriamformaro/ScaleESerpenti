@@ -70,6 +70,10 @@ public class GUI extends JFrame implements Observer {
                 sincronizzaMovimenti(player, messaggioTurno);
             }
 
+            if (!dialog.getUnDado() && player.getD().getDado1() == 6 && player.getD().getDado2() == 6) {
+                messaggioTurno.append("Il giocatore ").append(player.getId() + 1).append(" ha ottenuto un doppio 6 e ha diritto a un altro turno!\n");
+            }
+
             // Aggiungi il messaggio all'area di testo
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -94,24 +98,20 @@ public class GUI extends JFrame implements Observer {
                 // Gestione casella serpente
                 posizioneCorrente = ((CasellaSerpente) casella).getCoda();
                 player.setPosizione(posizioneCorrente);
-                messaggioTurno.append(" - Casella serpente! Torna indietro alla casella: ")
-                        .append(posizioneCorrente + 1).append("\n");
+                messaggioTurno.append(" - Casella serpente! Torna indietro alla casella: ").append(posizioneCorrente + 1).append("\n");
                 azioneInCorso = true; // Ritorna alla verifica, perché la posizione è cambiata
             } else if (casella instanceof CasellaScala) {
                 // Gestione casella scala
                 posizioneCorrente = ((CasellaScala) casella).getFine();
                 player.setPosizione(posizioneCorrente);
-                messaggioTurno.append(" - Casella scala! Avanza fino alla casella: ")
-                        .append(posizioneCorrente + 1).append("\n");
-                azioneInCorso = true; // Ritorna alla verifica, perché la posizione è cambiata
+                messaggioTurno.append(" - Casella scala! Avanza fino alla casella: ").append(posizioneCorrente + 1).append("\n");
+                azioneInCorso = true;
             } else if (casella instanceof CasellaPremio) {
                 // Gestione casella premio
                 if (casella.getTipo() == CaselleSpeciali.DADI) {
                     casella.esegui(player); // Esegui l'azione della casella
                     int avanzamento = ((CasellaPremio) casella).getAvanzamento();
-                    messaggioTurno.append(" - Casella premio 'DADI'. Rilancia i dadi e avanza di ")
-                            .append(avanzamento).append(" caselle!\n");
-                    // Dopo il rilancio, la posizione è già stata aggiornata in CasellaPremio
+                    messaggioTurno.append(" - Casella premio 'DADI'. Rilancia i dadi e avanza di ").append(avanzamento).append(" caselle!\n");
                     azioneInCorso = true;
                 } else {
                     casella.esegui(player);
@@ -133,7 +133,7 @@ public class GUI extends JFrame implements Observer {
                 // Gestione casella pesca una carta
                 messaggioTurno.append(" - Casella pesca una carta! Carta pescata: ").append(casella.getTipo()).append("\n");
                 if (casella.getTipo() == CaselleSpeciali.DADI) {
-                    messaggioTurno.append("Si ha diritto ad un nuovo turno, si avanza del nuovo lancio dei dadi e si arriva alla casella " + player.getAvanzo());
+                    messaggioTurno.append("Si ha diritto ad un nuovo turno, si avanza del nuovo lancio dei dadi");
                 } else if (casella.getTipo() == CaselleSpeciali.MOLLA) {
                     messaggioTurno.append("Avanza ancora del punteggio ottenuto con l'ultimo lancio di dadi!\n");
                 } else if (casella.getTipo() == CaselleSpeciali.PANCHINA) {

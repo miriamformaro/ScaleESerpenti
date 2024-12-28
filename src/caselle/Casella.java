@@ -20,15 +20,9 @@ public class Casella implements CasellaFactory {
             case MOLLA:
                 return new CasellaPremio(posizione, CaselleSpeciali.MOLLA);
             case PESCA_UNA_CARTA:
-                return new CasellaPescaUnaCarta(posizione, pescaUnaCarta());
+                return new CasellaPescaUnaCarta(posizione);
             default:
                 throw new  IllegalArgumentException("Tipo non valido");
         }
-    }
-
-    private CaselleSpeciali pescaUnaCarta() {
-        CaselleSpeciali[] valori = {CaselleSpeciali.PANCHINA, CaselleSpeciali.LOCANDA, CaselleSpeciali.DADI, CaselleSpeciali.MOLLA, CaselleSpeciali.DIVIETO_DI_SOSTA};
-        int i = new Random().nextInt(valori.length);
-        return valori[i];
     }
 }

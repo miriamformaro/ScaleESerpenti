@@ -40,10 +40,10 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
                 testa = listaSerpenti.get(i).getTesta();
                 coda = listaSerpenti.get(i).getCoda();
 
-                if(testa <= coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza)) {
+                if(testa <= coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda)) {
                     System.out.println("Serpente invalido! Inserirlo in altre posizioni!");
                 }
-            } while(testa <= coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda) || stessaRiga(testa, coda, larghezza));
+            } while(testa <= coda || board.getCaselleUsate().contains(testa) || board.getCaselleUsate().contains(coda));
             board.aggiungiCasella(CaselleSpeciali.SERPENTE, testa, coda);
             board.getCaselleUsate().add(testa);
             board.getCaselleUsate().add(coda);
@@ -57,10 +57,10 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
                 inizio = listaScale.get(i).getInizio();
                 fine = listaScale.get(i).getFine();
 
-                if(fine <= inizio || board.getCaselleUsate().contains(inizio) || board.getCaselleUsate().contains(fine) || stessaRiga(inizio, fine, larghezza)) {
+                if(fine <= inizio || board.getCaselleUsate().contains(inizio) || board.getCaselleUsate().contains(fine)) {
                     System.out.println("Scala invalida! Inserirla in altre posizioni!");
                 }
-            } while(fine <= inizio || board.getCaselleUsate().contains(inizio) || board.getCaselleUsate().contains(fine) || stessaRiga(inizio, fine, larghezza));
+            } while(fine <= inizio || board.getCaselleUsate().contains(inizio) || board.getCaselleUsate().contains(fine));
             board.aggiungiCasella(CaselleSpeciali.SCALA, inizio, fine);
             board.getCaselleUsate().add(inizio);
             board.getCaselleUsate().add(fine);
@@ -71,8 +71,6 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
         aggiungi(CaselleSpeciali.DADI, board, dadi);
         aggiungi(CaselleSpeciali.MOLLA, board, molla);
         aggiungi(CaselleSpeciali.PESCA_UNA_CARTA, board, pescaUnaCarta);
-
-        //board.caselleNormali();
     }
 
     private void aggiungi(CaselleSpeciali tipo, Board board, int posizione) {
@@ -82,9 +80,5 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
         } while (board.getCaselleUsate().contains(pos));
         board.aggiungiCasella(tipo, pos, 0);
         board.getCaselleUsate().add(pos);
-    }
-
-    private boolean stessaRiga(int pos1, int pos2, int larghezza) {
-        return (pos1/larghezza == pos2/larghezza);
     }
 }

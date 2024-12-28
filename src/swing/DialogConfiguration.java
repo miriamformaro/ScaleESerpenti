@@ -440,10 +440,10 @@ public class DialogConfiguration extends JFrame{
             Set<Integer> posizioniUsate = new HashSet<>();
             if (serpenti.isEnabled()) {
                 for (int i = 0; i < numeroSerpenti; i++) {
-                    int testa = Integer.parseInt(listaPosizioneTestaSerpente.get(i).getText());
-                    int coda = Integer.parseInt(listaPosizioneCodaSerpente.get(i).getText());
-                    if (testa > numeroCaselle || coda > numeroCaselle) {
-                        JOptionPane.showMessageDialog(dialog, "Errore: La testa o la coda del serpente non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Serpente!", JOptionPane.ERROR_MESSAGE);
+                    int testa = Integer.parseInt(listaPosizioneTestaSerpente.get(i).getText())-1;
+                    int coda = Integer.parseInt(listaPosizioneCodaSerpente.get(i).getText())-1;
+                    if (testa<=0 || coda<=0 ||testa >= numeroCaselle-1 || coda >= numeroCaselle-1) {
+                        JOptionPane.showMessageDialog(dialog, "Errore: La coda o la testa del serpente non può trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if (coda >= testa) {
@@ -464,10 +464,11 @@ public class DialogConfiguration extends JFrame{
             List<CasellaScala> listaScale = new LinkedList<>();
             if (scale.isEnabled()) {
                 for (int i = 0; i < numeroScale; i++) {
-                    int base = Integer.parseInt(listaPosizioneFineScala.get(i).getText());
-                    int cima = Integer.parseInt(listaPosizioneCimaScala.get(i).getText());
-                    if (base > numeroCaselle || cima > numeroCaselle) {
-                        JOptionPane.showMessageDialog(dialog, "Errore: La base o la cima della scala non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Scala!", JOptionPane.ERROR_MESSAGE);
+                    int base = Integer.parseInt(listaPosizioneFineScala.get(i).getText())-1;
+                    int cima = Integer.parseInt(listaPosizioneCimaScala.get(i).getText())-1;
+                    if (base<=0 || cima<=0 || base >= numeroCaselle-1 || cima >= numeroCaselle-1) {
+                        JOptionPane.showMessageDialog(dialog,
+                                "Errore: La base o la cima della scala non può trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if (base >= cima) {
@@ -486,9 +487,9 @@ public class DialogConfiguration extends JFrame{
             }
 
             if (posizionePanchina.isEnabled()) {
-                panchina = Integer.parseInt(posizionePanchina.getText());
-                if (panchina > numeroCaselle) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della panchina non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Panchina!", JOptionPane.ERROR_MESSAGE);
+                panchina = Integer.parseInt(posizionePanchina.getText())-1;
+                if (panchina<=0 || panchina >= numeroCaselle-1) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'PANCHINA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -499,9 +500,9 @@ public class DialogConfiguration extends JFrame{
             }
 
             if (posizioneLocanda.isEnabled()) {
-                locanda = Integer.parseInt(posizioneLocanda.getText());
-                if (locanda > numeroCaselle) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della locanda non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Locanda!", JOptionPane.ERROR_MESSAGE);
+                locanda = Integer.parseInt(posizioneLocanda.getText())-1;
+                if (locanda<=0 || locanda >= numeroCaselle-1) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'LOCANDA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -512,9 +513,9 @@ public class DialogConfiguration extends JFrame{
             }
 
             if (posizioneDadi.isEnabled()) {
-                dadi = Integer.parseInt(posizioneDadi.getText());
-                if (dadi > numeroCaselle) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della casella 'DADI' non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
+                dadi = Integer.parseInt(posizioneDadi.getText())-1;
+                if (dadi <= 0 || dadi >= numeroCaselle-1) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'DADI' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if(posizioniUsate.contains(dadi)) {
@@ -524,11 +525,12 @@ public class DialogConfiguration extends JFrame{
             }
 
             if (posizioneMolla.isEnabled()) {
-                molla = Integer.parseInt(posizioneMolla.getText());
-                if (molla > numeroCaselle) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della casella 'MOLLA' non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Casella Molla!", JOptionPane.ERROR_MESSAGE);
+                molla = Integer.parseInt(posizioneMolla.getText())-1;
+                if (molla<=0 || molla >= numeroCaselle-1) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'MOLLA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
                 if(posizioniUsate.contains(molla)) {
                     JOptionPane.showMessageDialog(dialog, "Errore: Due elementi non possono occupare la stessa posizione sulla tabella!", "Errore Posizioni Duplicate!", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -536,9 +538,9 @@ public class DialogConfiguration extends JFrame{
             }
 
             if (posizionePescaUnaCarta.isEnabled()) {
-                pescaUnaCarta = Integer.parseInt(posizionePescaUnaCarta.getText());
-                if (pescaUnaCarta > numeroCaselle) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La posizione della casella 'PESCA UNA CARTA' non può superare il numero totale di caselle (" + numeroCaselle + ")!", "Errore Posizione Casella Pesca Una Carta!", JOptionPane.ERROR_MESSAGE);
+                pescaUnaCarta = Integer.parseInt(posizionePescaUnaCarta.getText())-1;
+                if (panchina<=0 || pescaUnaCarta >= numeroCaselle-1) {
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'PESCA UNA CARTA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if(posizioniUsate.contains(pescaUnaCarta)) {
