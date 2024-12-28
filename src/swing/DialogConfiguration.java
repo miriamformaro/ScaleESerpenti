@@ -145,13 +145,13 @@ public class DialogConfiguration extends JFrame{
         // Aggiungi gli elementi al dialog
         GridBagConstraints gbc = new GridBagConstraints();
 
-// Configurazione base di default per gbc
+        // Configurazione base di default per gbc
         gbc.insets = new Insets(5, 5, 5, 5); // Margini uniformi per ogni componente
         gbc.weightx = 1.0; // Distribuzione uniforme dello spazio orizzontale
         gbc.weighty = 0.0; // Nessuna distribuzione verticale predefinita
         gbc.fill = GridBagConstraints.HORIZONTAL; // Allarga i componenti orizzontalmente
 
-// Giocatori
+        // Giocatori
         gbc.gridx = 0; // Prima colonna
         gbc.gridy = 0; // Prima riga
         gbc.anchor = GridBagConstraints.LINE_END; // Allinea a destra
@@ -161,7 +161,7 @@ public class DialogConfiguration extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START; // Allinea a sinistra
         dialog.add(textFieldGiocatori, gbc);
 
-// Numero di caselle
+        // Numero di caselle
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -181,7 +181,7 @@ public class DialogConfiguration extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
         dialog.add(comboNumeroDiDadi, gbc);
 
-// Strategia
+        // Strategia
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -191,7 +191,7 @@ public class DialogConfiguration extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
         dialog.add(comboStrategia, gbc);
 
-// Serpenti
+        // Serpenti
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -201,7 +201,7 @@ public class DialogConfiguration extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
         dialog.add(serpenti, gbc);
 
-// Pannello scrollabile per i serpenti
+        // Pannello scrollabile per i serpenti
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2; // Occupa entrambe le colonne
@@ -209,7 +209,7 @@ public class DialogConfiguration extends JFrame{
         gbc.weighty = 1.0; // Distribuzione verticale
         dialog.add(scrollPaneSerpenti, gbc);
 
-// Scale
+        // Scale
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.gridwidth = 1; // Torna a una singola colonna
@@ -221,7 +221,7 @@ public class DialogConfiguration extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
         dialog.add(scale, gbc);
 
-// Pannello scrollabile per le scale
+        // Pannello scrollabile per le scale
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.gridwidth = 2;
@@ -229,7 +229,7 @@ public class DialogConfiguration extends JFrame{
         gbc.weighty = 1.0;
         dialog.add(scrollPaneScale, gbc);
 
-// Panchina
+        // Panchina
         gbc.gridx = 0;
         gbc.gridy = 8;
         gbc.gridwidth = 1;
@@ -241,7 +241,7 @@ public class DialogConfiguration extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
         dialog.add(posizionePanchina, gbc);
 
-// Locanda
+        // Locanda
         gbc.gridx = 0;
         gbc.gridy = 9;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -251,7 +251,7 @@ public class DialogConfiguration extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
         dialog.add(posizioneLocanda, gbc);
 
-// Dadi
+        // Dadi
         gbc.gridx = 0;
         gbc.gridy = 10;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -261,7 +261,7 @@ public class DialogConfiguration extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
         dialog.add(posizioneDadi, gbc);
 
-// Molla
+        // Molla
         gbc.gridx = 0;
         gbc.gridy = 11;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -281,7 +281,7 @@ public class DialogConfiguration extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
         dialog.add(posizionePescaUnaCarta, gbc);
 
-// Bottone Avvia Gioco
+        // Bottone Avvia Gioco
         gbc.gridx = 0;
         gbc.gridy = 13;
         gbc.gridwidth = 2; // Centra il bottone su entrambe le colonne

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GestioneUtenteStrategy implements GestioneBoardStrategy {
-    private Scanner sc = new Scanner(System.in);
     private List<CasellaSerpente> listaSerpenti;
     private List<CasellaScala> listaScale;
     private int panchina;

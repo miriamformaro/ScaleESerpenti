@@ -87,9 +87,8 @@ public class GUI extends JFrame implements Observer {
     private void sincronizzaMovimenti(Player player, StringBuilder messaggioTurno) {
         boolean azioneInCorso = true;
 
-        // Fino a quando ci sono azioni da fare (finché il giocatore non è fermo su una casella che non richiede azioni)
         while (azioneInCorso) {
-            azioneInCorso = false; // Presupposto che non ci siano altre azioni
+            azioneInCorso = false;
 
             int posizioneCorrente = player.getPosizione();
             AbstractCasella casella = tabellonePanel.getBoard().getCasella(posizioneCorrente);
@@ -99,7 +98,7 @@ public class GUI extends JFrame implements Observer {
                 posizioneCorrente = ((CasellaSerpente) casella).getCoda();
                 player.setPosizione(posizioneCorrente);
                 messaggioTurno.append(" - Casella serpente! Torna indietro alla casella: ").append(posizioneCorrente + 1).append("\n");
-                azioneInCorso = true; // Ritorna alla verifica, perché la posizione è cambiata
+                azioneInCorso = true;
             } else if (casella instanceof CasellaScala) {
                 // Gestione casella scala
                 posizioneCorrente = ((CasellaScala) casella).getFine();
@@ -109,7 +108,7 @@ public class GUI extends JFrame implements Observer {
             } else if (casella instanceof CasellaPremio) {
                 // Gestione casella premio
                 if (casella.getTipo() == CaselleSpeciali.DADI) {
-                    casella.esegui(player); // Esegui l'azione della casella
+                    casella.esegui(player);
                     int avanzamento = ((CasellaPremio) casella).getAvanzamento();
                     messaggioTurno.append(" - Casella premio 'DADI'. Rilancia i dadi e avanza di ").append(avanzamento).append(" caselle!\n");
                     azioneInCorso = true;
