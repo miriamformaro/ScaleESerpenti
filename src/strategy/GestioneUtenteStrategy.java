@@ -7,7 +7,6 @@ import partita.Board;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 public class GestioneUtenteStrategy implements GestioneBoardStrategy {
     private List<CasellaSerpente> listaSerpenti;
