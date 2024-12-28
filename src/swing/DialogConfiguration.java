@@ -419,9 +419,9 @@ public class DialogConfiguration extends JFrame{
     private void avviaGioco() {
         try {
             numeroGiocatori = Integer.parseInt(textFieldGiocatori.getText());
-            if (numeroGiocatori < 1 || numeroGiocatori > 6) {
+            if (numeroGiocatori <= 1 || numeroGiocatori > 6) {
                 JOptionPane.showMessageDialog(dialog,
-                        "Il numero di giocatori deve essere compreso tra 1 e 6!", "Errore", JOptionPane.ERROR_MESSAGE);
+                        "Il numero di giocatori deve essere compreso tra 2 e 6!", "Errore", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
