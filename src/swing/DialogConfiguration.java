@@ -426,9 +426,9 @@ public class DialogConfiguration extends JFrame{
             }
 
             numeroCaselle = Integer.parseInt(textFieldCaselle.getText());
-            if (numeroCaselle <= 1 || numeroCaselle > 500) {
+            if (numeroCaselle <= 35 || numeroCaselle > 300) {
                 JOptionPane.showMessageDialog(dialog,
-                        "Il numero di caselle deve essere compreso tra 1 e 500!", "Errore", JOptionPane.ERROR_MESSAGE);
+                        "Il numero di caselle deve essere compreso tra 36 e 300!", "Errore", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

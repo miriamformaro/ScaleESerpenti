@@ -21,7 +21,7 @@ public class GUI extends JFrame implements Observer {
     private List<Player> players;
     private List<JLabel> pedine;
     private String messaggio = ""; // Inizializzazione di messaggio
-    int posizione;
+    private CaselleSpeciali tipo;
 
     public GUI() {
         super("Scale e serpenti");
@@ -44,6 +44,7 @@ public class GUI extends JFrame implements Observer {
                 messaggioTurno.append("\nDado: ").append(player.getD().getDado1()).append("\n");
             } else {
                 if (player.getPosizioneIniziale() >= tabellonePanel.getBoard().getLenght() - 6) {
+                    dialog.getUnDado();
                     messaggioTurno.append("\nDado: ").append(player.getD().getDado1()).append("\n");
                 } else {
                     messaggioTurno.append("\nDado1: ").append(player.getD().getDado1()).append(", Dado2: ").append(player.getD().getDado2()).append("\n");
@@ -57,7 +58,6 @@ public class GUI extends JFrame implements Observer {
             // Sincronizza movimenti e messaggi per eventuali azioni a catena
             sincronizzaMovimenti(player, messaggioTurno);
 
-            // Controllo di vittoria o superamento
             if ((posizione + 1) == (tabellonePanel.getBoard().getUltimaCasella() + 1)) {
                 messaggioTurno.append("Il giocatore ").append(player.getId() + 1).append(" ha vinto!");
             } else if ((posizione + 1) > tabellonePanel.getBoard().getUltimaCasella()) {
@@ -70,15 +70,16 @@ public class GUI extends JFrame implements Observer {
                 sincronizzaMovimenti(player, messaggioTurno);
             }
 
-            if (!dialog.getUnDado() && player.getD().getDado1() == 6 && player.getD().getDado2() == 6) {
+            if (!dialog.getUnDado() && player.getD().getDado1() == 6 && player.getD().getDado2() == 6 && (posizione+1)<(tabellonePanel.getBoard().getUltimaCasella()+1)) {
                 messaggioTurno.append("Il giocatore ").append(player.getId() + 1).append(" ha ottenuto un doppio 6 e ha diritto a un altro turno!\n");
+                sincronizzaMovimenti(player, messaggioTurno);
             }
 
             // Aggiungi il messaggio all'area di testo
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    areaMovimenti.append(messaggioTurno + "\n");
+                    areaMovimenti.append(messaggioTurno.toString() + "\n");
                 }
             });
         }
@@ -109,12 +110,11 @@ public class GUI extends JFrame implements Observer {
                 // Gestione casella premio
                 if (casella.getTipo() == CaselleSpeciali.DADI) {
                     casella.esegui(player);
-                    int avanzamento = ((CasellaPremio) casella).getAvanzamento();
-                    messaggioTurno.append(" - Casella premio 'DADI'. Rilancia i dadi e avanza di ").append(avanzamento).append(" caselle!\n");
+                    messaggioTurno.append(" - Casella premio 'DADI'. Rilancia i dadi e avanza di " + ((CasellaPremio) casella).getAvanzamento() + " caselle!\n");
                     azioneInCorso = true;
-                } else {
+                } else if(casella.getTipo() == CaselleSpeciali.MOLLA){
                     casella.esegui(player);
-                    messaggioTurno.append(" - Casella premio 'MOLLA'. Avanza ancora del punteggio ottenuto con l'ultimo lancio di dadi!\n");
+                    messaggioTurno.append(" - Casella premio 'MOLLA'. Avanza ancora del punteggio ottenuto con l'ultimo lancio di dadi! Arriva alla casella " + (player.getPosizione()+1) + "!\n");
                     azioneInCorso = true;
                 }
             } else if (casella instanceof CasellaSosta) {
@@ -130,21 +130,27 @@ public class GUI extends JFrame implements Observer {
                 }
             } else if (casella instanceof CasellaPescaUnaCarta) {
                 // Gestione casella pesca una carta
-                messaggioTurno.append(" - Casella pesca una carta! Carta pescata: ").append(casella.getTipo()).append("\n");
+                messaggioTurno.append(" - Casella pesca una carta!\n");
                 if (casella.getTipo() == CaselleSpeciali.DADI) {
-                    messaggioTurno.append("Si ha diritto ad un nuovo turno, si avanza del nuovo lancio dei dadi");
+                    messaggioTurno.append("- Carta pescata: 'DADI'. Si ha diritto ad un nuovo turno, si avanza del nuovo lancio dei dadi");
                 } else if (casella.getTipo() == CaselleSpeciali.MOLLA) {
-                    messaggioTurno.append("Avanza ancora del punteggio ottenuto con l'ultimo lancio di dadi!\n");
+                    messaggioTurno.append("- Carta pescata: 'MOLLA'. Avanza ancora del punteggio ottenuto con l'ultimo lancio di dadi!\n");
                 } else if (casella.getTipo() == CaselleSpeciali.PANCHINA) {
                     if (player.getMettereCartaDaParte() > 0) {
-                        messaggioTurno.append("Il giocatore ha una carta 'DIVIETO DI SOSTA' quindi non sosta al prossimo turno!\n");
+                        messaggioTurno.append("- Carta pescata: 'PANCHINA'. Il giocatore ha una carta 'DIVIETO DI SOSTA' quindi non sosta al prossimo turno!\n");
                     } else {
-                        messaggioTurno.append("Sosta per un turno!\n");
+                        messaggioTurno.append("- Carta pescata: 'PANCHINA'. Sosta per un turno!\n");
                     }
                 } else if (casella.getTipo() == CaselleSpeciali.LOCANDA) {
-                    messaggioTurno.append("Sosta per tre turni!\n");
-                } else {
-                    messaggioTurno.append("Questa carta ti fa sostare un turno in meno se vai sulla casella 'PANCHINA' o 'LOCANDA'!\n");
+                    if(player.getMettereCartaDaParte() > 0) {
+                        messaggioTurno.append("- Carta pescata: 'LOCANDA'. Il giocatore ha una carta 'DIVIETO DI SOSTA' quindi sosta un turno in meno!\n");
+                    } else {
+                        messaggioTurno.append("- Carta pescata: 'LOCANDA'. Sosta per tre turni!\n");
+                    }
+                } else if (casella.getTipo()== CaselleSpeciali.DIVIETO_DI_SOSTA){
+                    messaggioTurno.append("- Carta pescata: 'DIVIETO DI SOSTA'. Questa carta ti fa sostare un turno in meno se vai sulla casella 'PANCHINA' o 'LOCANDA'!\n");
+                } else if(casella.getTipo()== CaselleSpeciali.PESCA_UNA_CARTA) {
+                    messaggioTurno.append("Pesca una carta!\n");
                 }
             } else {
                 // Casella semplice
@@ -206,7 +212,7 @@ public class GUI extends JFrame implements Observer {
                 JLabel pedina = pedine.get(turnoCorrente);
 
                 try {
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.SECONDS.sleep(0);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }

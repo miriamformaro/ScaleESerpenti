@@ -155,5 +155,9 @@ public class Player implements Subject {
     public void setPosizioneIniziale(int posizioneIniziale) {
         this.posizioneIniziale = posizioneIniziale;
     }
+
+    public void setAvanzo(int i) {
+        avanzo = i;
+    }
 }
 

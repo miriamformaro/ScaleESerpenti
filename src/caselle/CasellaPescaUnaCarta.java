@@ -9,32 +9,28 @@ public class CasellaPescaUnaCarta extends AbstractCasella{
     private CasellaSosta casellaSosta;
     private CasellaPremio casellaPremio;
 
-    public CasellaPescaUnaCarta(int posizione) {
+    public CasellaPescaUnaCarta(int posizione, CaselleSpeciali tipo) {
         super(posizione);
-        this.tipo = pescaUnaCarta();
-    }
-
-    private CaselleSpeciali tipo() {
-        // Se `tipo` è null, viene generato un nuovo valore
-        if (tipo == null) {
-            tipo = pescaUnaCarta();
-        }
-        return tipo;
+        this.tipo = tipo;
     }
 
     @Override
     public void esegui(Player p) {
-        this.tipo = pescaUnaCarta();
+        tipo = pescaUnaCarta();
         System.out.println("Il giocatore si trova su una casella 'Pesca una carta', ha pescato la carta: " + tipo);
         if(tipo==CaselleSpeciali.PANCHINA || tipo==CaselleSpeciali.LOCANDA) {
+            p.notifyObservers();
             casellaSosta = new CasellaSosta(this.getPosizione(), tipo);
             casellaSosta.esegui(p);
         } else if(tipo==CaselleSpeciali.DADI || tipo==CaselleSpeciali.MOLLA) {
+            p.notifyObservers();
             casellaPremio = new CasellaPremio(this.getPosizione(), tipo);
             casellaPremio.esegui(p);
         } else if(tipo==CaselleSpeciali.DIVIETO_DI_SOSTA) {
+            p.notifyObservers();
             p.mettereCartaDaParte();
         }
+        tipo = CaselleSpeciali.PESCA_UNA_CARTA;
     }
 
     @Override

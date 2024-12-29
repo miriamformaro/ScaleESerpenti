@@ -20,7 +20,7 @@ public class Casella implements CasellaFactory {
             case MOLLA:
                 return new CasellaPremio(posizione, CaselleSpeciali.MOLLA);
             case PESCA_UNA_CARTA:
-                return new CasellaPescaUnaCarta(posizione);
+                return new CasellaPescaUnaCarta(posizione, CaselleSpeciali.PESCA_UNA_CARTA);
             default:
                 throw new  IllegalArgumentException("Tipo non valido");
         }
