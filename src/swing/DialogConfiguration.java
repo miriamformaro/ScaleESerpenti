@@ -314,8 +314,6 @@ public class DialogConfiguration extends JFrame{
                     posizioneMolla.setEnabled(true);
                     labelPescaUnaCarta.setEnabled(true);
                     posizionePescaUnaCarta.setEnabled(true);
-                    aggiornaSerpenti();
-                    aggiornaScale();
                 } else {
                     labelSer.setEnabled(false);
                     serpenti.setEnabled(false);
@@ -340,6 +338,8 @@ public class DialogConfiguration extends JFrame{
                     labelPescaUnaCarta.setEnabled(false);
                     posizionePescaUnaCarta.setEnabled(false);
                 }
+                aggiornaSerpenti();
+                aggiornaScale();
             }
         });
 
@@ -367,53 +367,61 @@ public class DialogConfiguration extends JFrame{
     private List<JTextField> listaPosizioneCodaSerpente = new LinkedList<>();
     private List<JTextField> listaPosizioneTestaSerpente = new LinkedList<>();
     private void aggiornaSerpenti() {
-        panelSerpenti.removeAll();
-        listaPosizioneCodaSerpente.clear();
-        listaPosizioneTestaSerpente.clear();
+        if(comboStrategia.getSelectedItem().toString().equals("utente")) {
+            panelSerpenti.removeAll();
+            listaPosizioneCodaSerpente.clear();
+            listaPosizioneTestaSerpente.clear();
 
-        int numSerpenti = Integer.parseInt(serpenti.getSelectedItem().toString());
+            int numSerpenti = Integer.parseInt(serpenti.getSelectedItem().toString());
 
-        for (int i = 0; i < numSerpenti; i++) {
-            panelSerpenti.add(new JLabel("Serpente " + (i + 1) + " - Coda:"));
-            JTextField codaField = new JTextField(10);
-            listaPosizioneCodaSerpente.add(codaField);
-            panelSerpenti.add(codaField);
+            for (int i = 0; i < numSerpenti; i++) {
+                panelSerpenti.add(new JLabel("Serpente " + (i + 1) + " - Coda:"));
+                JTextField codaField = new JTextField(10);
+                listaPosizioneCodaSerpente.add(codaField);
+                panelSerpenti.add(codaField);
 
-            panelSerpenti.add(new JLabel("Serpente " + (i + 1) + " - Testa:"));
-            JTextField testaField = new JTextField(10);
-            listaPosizioneTestaSerpente.add(testaField);
-            panelSerpenti.add(testaField);
+                panelSerpenti.add(new JLabel("Serpente " + (i + 1) + " - Testa:"));
+                JTextField testaField = new JTextField(10);
+                listaPosizioneTestaSerpente.add(testaField);
+                panelSerpenti.add(testaField);
+            }
+
+            panelSerpenti.revalidate();
+            panelSerpenti.repaint();
+        } else {
+            panelSerpenti.removeAll();
         }
-
-        panelSerpenti.revalidate();
-        panelSerpenti.repaint();
     }
 
     private List<JTextField> listaPosizioneFineScala = new LinkedList<>();
     private List<JTextField> listaPosizioneCimaScala = new LinkedList<>();
     private void aggiornaScale() {
-        panelScale.removeAll();
-        listaPosizioneFineScala.clear();
-        listaPosizioneCimaScala.clear();
+        if(comboStrategia.getSelectedItem().toString().equals("utente")) {
+            panelScale.removeAll();
+            listaPosizioneFineScala.clear();
+            listaPosizioneCimaScala.clear();
 
-        int numScale = Integer.parseInt(scale.getSelectedItem().toString());
+            int numScale = Integer.parseInt(scale.getSelectedItem().toString());
 
-        for (int i = 0; i < numScale; i++) {
-            // Etichetta per la base della scala
-            panelScale.add(new JLabel("Scala " + (i + 1) + " - Base:"));
-            JTextField baseField = new JTextField(10);
-            listaPosizioneFineScala.add(baseField);
-            panelScale.add(baseField);
+            for (int i = 0; i < numScale; i++) {
+                // Etichetta per la base della scala
+                panelScale.add(new JLabel("Scala " + (i + 1) + " - Base:"));
+                JTextField baseField = new JTextField(10);
+                listaPosizioneFineScala.add(baseField);
+                panelScale.add(baseField);
 
-            // Etichetta per la cima della scala
-            panelScale.add(new JLabel("Scala " + (i + 1) + " - Cima:"));
-            JTextField cimaField = new JTextField(10);
-            listaPosizioneCimaScala.add(cimaField);
-            panelScale.add(cimaField);
+                // Etichetta per la cima della scala
+                panelScale.add(new JLabel("Scala " + (i + 1) + " - Cima:"));
+                JTextField cimaField = new JTextField(10);
+                listaPosizioneCimaScala.add(cimaField);
+                panelScale.add(cimaField);
+            }
+
+            panelScale.revalidate();
+            panelScale.repaint();
+        } else {
+            panelScale.removeAll();
         }
-
-        panelScale.revalidate();
-        panelScale.repaint();
     }
 
     private void avviaGioco() {
