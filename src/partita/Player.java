@@ -56,6 +56,7 @@ public class Player implements Subject {
     private void spostaPlayer(Board board) {
         this.setPosizioneIniziale(this.posizione);
         int avanzamento = 0;
+        avanzo = 0; // Inizializza avanzo a 0
 
         // Se il giocatore è fuori dal tabellone (posizione == -1), al primo lancio avanza come dal dado
         if (this.posizione == -1) {
@@ -69,7 +70,7 @@ public class Player implements Subject {
             } else {
                 avanzamento = d.eseguiLancio(); // lancia uno o due dadi a seconda delle regole del gioco
             }
-            avanzo = avanzamento; // serve per gestire la casella premio "molla"
+            avanzo = avanzamento; // Aggiorna avanzo
             System.out.println("Il giocatore " + id + " deve avanzare di " + avanzamento + " caselle!");
             this.posizione += avanzamento;
             System.out.println("Il giocatore " + id + " è arrivato alla casella " + posizione);
@@ -125,6 +126,10 @@ public class Player implements Subject {
         return mettereCartaDaParte;
     }
 
+    public void setMettereCartaDaParte(int mettereCartaDaParte) {
+        this.mettereCartaDaParte = mettereCartaDaParte;
+    }
+
     public void mettereCartaDaParte() {
         mettereCartaDaParte++; //il giocatore ha pescato una carta "DIVIETODISOSTA"
     }
@@ -158,6 +163,10 @@ public class Player implements Subject {
 
     public void setAvanzo(int i) {
         avanzo = i;
+    }
+
+    public int getTurniInAttesa() {
+        return turniInAttesa;
     }
 }
 

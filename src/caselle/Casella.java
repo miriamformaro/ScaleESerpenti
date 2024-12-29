@@ -1,7 +1,5 @@
 package caselle;
 
-import java.util.Random;
-
 public class Casella implements CasellaFactory {
 
     @Override
