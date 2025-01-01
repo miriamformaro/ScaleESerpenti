@@ -1,7 +1,6 @@
 package caselle;
 
 import partita.Player;
-import partita.Dado;
 
 public class CasellaPremio extends AbstractCasella {
     private CaselleSpeciali tipo;
@@ -21,18 +20,18 @@ public class CasellaPremio extends AbstractCasella {
             return;
         }
         if (tipo == CaselleSpeciali.DADI) {
-            System.out.println("Il giocatore è finito sulla casella premio 'DADI' farà un altro turno, rilancia i dadi!");
+            //System.out.println("Il giocatore è finito sulla casella premio 'DADI' farà un altro turno, rilancia i dadi!");
             avanzamento = p.getD().eseguiLancio();
             int nuovaPosizione = p.getPosizione() + avanzamento;
             p.setPosizione(nuovaPosizione);
-            System.out.println("Il giocatore avanzerà di " + avanzamento + " caselle!");
-            System.out.println("Nuova posizione: " + p.getPosizione());
+            //System.out.println("Il giocatore avanzerà di " + avanzamento + " caselle!");
+            //System.out.println("Nuova posizione: " + p.getPosizione());
         } else if (tipo == CaselleSpeciali.MOLLA) {
             int ultimoAvanzo = p.getAvanzo();  // Recupera l'ultimo avanzo
             if (ultimoAvanzo > 0) {
                 p.setPosizione(p.getPosizione() + ultimoAvanzo);  // Avanza di nuovo sulla base dell'ultimo movimento
-                System.out.println("Il giocatore avanza ancora del punteggio ottenuto con l’ultimo lancio di dadi!");
-                System.out.println("Nuova posizione: " + p.getPosizione());
+                //System.out.println("Il giocatore avanza ancora del punteggio ottenuto con l’ultimo lancio di dadi!");
+                //System.out.println("Nuova posizione: " + p.getPosizione());
             }
         }
     }

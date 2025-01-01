@@ -60,6 +60,8 @@ public class DialogConfiguration extends JFrame{
     private int dadi;
     private int molla;
     private int pescaUnaCarta;
+    private List<Integer> code = new LinkedList<>();
+    private List<CasellaScala> listaScale = new LinkedList<>();
 
     public DialogConfiguration(JFrame parentFrame) {
         this.parentFrame = parentFrame;
@@ -451,7 +453,7 @@ public class DialogConfiguration extends JFrame{
                     int testa = Integer.parseInt(listaPosizioneTestaSerpente.get(i).getText())-1;
                     int coda = Integer.parseInt(listaPosizioneCodaSerpente.get(i).getText())-1;
                     if (testa<=0 || coda<=0 ||testa >= numeroCaselle-1 || coda >= numeroCaselle-1) {
-                        JOptionPane.showMessageDialog(dialog, "Errore: La coda o la testa del serpente non può trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(dialog, "Errore: La coda o la testa del serpente non può trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ") o in posizioni invalide!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if (coda >= testa) {
@@ -465,6 +467,7 @@ public class DialogConfiguration extends JFrame{
                     posizioniUsate.add(coda);
                     posizioniUsate.add(testa);
                     listaSerpenti.add(new CasellaSerpente(testa, coda));
+                    code.add(coda);
                 }
             }
 
@@ -476,7 +479,7 @@ public class DialogConfiguration extends JFrame{
                     int cima = Integer.parseInt(listaPosizioneCimaScala.get(i).getText())-1;
                     if (base<=0 || cima<=0 || base >= numeroCaselle-1 || cima >= numeroCaselle-1) {
                         JOptionPane.showMessageDialog(dialog,
-                                "Errore: La base o la cima della scala non può trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
+                                "Errore: La base o la cima della scala non può trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ") o in posizioni invalide!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if (base >= cima) {
@@ -497,7 +500,7 @@ public class DialogConfiguration extends JFrame{
             if (posizionePanchina.isEnabled()) {
                 panchina = Integer.parseInt(posizionePanchina.getText())-1;
                 if (panchina<=0 || panchina >= numeroCaselle-1) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'PANCHINA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'PANCHINA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ") o in posizioni invalide!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -510,7 +513,7 @@ public class DialogConfiguration extends JFrame{
             if (posizioneLocanda.isEnabled()) {
                 locanda = Integer.parseInt(posizioneLocanda.getText())-1;
                 if (locanda<=0 || locanda >= numeroCaselle-1) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'LOCANDA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'LOCANDA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ") o in posizioni invalide!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -523,7 +526,7 @@ public class DialogConfiguration extends JFrame{
             if (posizioneDadi.isEnabled()) {
                 dadi = Integer.parseInt(posizioneDadi.getText())-1;
                 if (dadi <= 0 || dadi >= numeroCaselle-1) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'DADI' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'DADI' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ") o in posizioni invalide!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if(posizioniUsate.contains(dadi)) {
@@ -535,7 +538,7 @@ public class DialogConfiguration extends JFrame{
             if (posizioneMolla.isEnabled()) {
                 molla = Integer.parseInt(posizioneMolla.getText())-1;
                 if (molla<=0 || molla >= numeroCaselle-1) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'MOLLA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'MOLLA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ") o in posizioni invalide!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -548,7 +551,7 @@ public class DialogConfiguration extends JFrame{
             if (posizionePescaUnaCarta.isEnabled()) {
                 pescaUnaCarta = Integer.parseInt(posizionePescaUnaCarta.getText())-1;
                 if (panchina<=0 || pescaUnaCarta >= numeroCaselle-1) {
-                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'PESCA UNA CARTA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ")!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dialog, "Errore: La casella 'PESCA UNA CARTA' non deve essere trovarsi nella prima o nell'ultima posizione (" + numeroCaselle + ") o in posizioni invalide!", "Errore Posizione Casella Dadi!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if(posizioniUsate.contains(pescaUnaCarta)) {
@@ -565,6 +568,15 @@ public class DialogConfiguration extends JFrame{
             }
 
             board = new Board(numeroCaselle, strategy);
+            if(strategy instanceof GestioneUtenteStrategy) {
+                for(CasellaSerpente i : listaSerpenti) {
+                    board.aggiungiSerpente(i);
+                }
+
+                for(CasellaScala i : listaScale) {
+                    board.aggiungiScala(i);
+                }
+            }
             board.applicaStrategia();
             getContentPane().removeAll();
 

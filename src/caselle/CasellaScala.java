@@ -22,12 +22,16 @@ public class CasellaScala extends AbstractCasella {
     public void setFine(int fine) { this.fine = fine; }
 
     public void esegui(Player player) {
-        System.out.println("La casella contiene la fine di una scala, avanza fino alla cima della scala!");
+        //System.out.println("La casella contiene la fine di una scala, avanza fino alla cima della scala!");
         player.setPosizione(fine);
-        System.out.println("Nuova posizione: " + fine);
+        //System.out.println("Nuova posizione: " + fine);
     }
 
     public CaselleSpeciali getTipo() {
         return CaselleSpeciali.SCALA;
+    }
+
+    public String toString() {
+        return "Fine scala: " + (this.getInizio()+1) + " cima scala: " + (fine+1);
     }
 }

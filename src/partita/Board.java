@@ -1,11 +1,11 @@
 package partita;
 
-import caselle.AbstractCasella;
-import caselle.Casella;
-import caselle.CaselleSpeciali;
+import caselle.*;
 import strategy.GestioneBoardStrategy;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class Board {
@@ -13,6 +13,8 @@ public class Board {
     private Set<Integer> caselleUsate = new HashSet<>();
     private Casella casellaFactory = new Casella();
     private GestioneBoardStrategy strategy;
+    private List<CasellaSerpente> listaSerpenti = new LinkedList<>();
+    private List<CasellaScala> scaleLista = new LinkedList<>();
 
     public Board(int numeroCaselle, GestioneBoardStrategy strategy) {
         caselle = new AbstractCasella[numeroCaselle];
@@ -55,5 +57,29 @@ public class Board {
 
     public Casella getCasellaFactory() {
         return casellaFactory;
+    }
+
+    public void aggiungiSerpente(CasellaSerpente serpente) {
+        listaSerpenti.add(serpente);
+    }
+
+    public String getSerpente() {
+        StringBuilder sb = new StringBuilder();
+        for(CasellaSerpente serpente : listaSerpenti) {
+            sb.append(serpente.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public void aggiungiScala(CasellaScala scala) {
+        scaleLista.add(scala);
+    }
+
+    public String getScala() {
+        StringBuilder sb = new StringBuilder();
+        for(CasellaScala scala : scaleLista) {
+            sb.append(scala.toString()).append("\n");
+        }
+        return sb.toString();
     }
 }

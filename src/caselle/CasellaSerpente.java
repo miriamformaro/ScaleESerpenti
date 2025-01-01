@@ -24,12 +24,16 @@ public class CasellaSerpente extends AbstractCasella {
     }
 
     public void esegui(Player player) {
-        System.out.println("La casella contiene la testa del serpente, devi tornare indietro fino alla sua coda!");
+        //System.out.println("La casella contiene la testa del serpente, devi tornare indietro fino alla sua coda!");
         player.setPosizione(coda);
-        System.out.println("Nuova posizione: " + coda);
+        //System.out.println("Nuova posizione: " + coda);
     }
 
     public CaselleSpeciali getTipo() {
         return CaselleSpeciali.SERPENTE;
+    }
+
+    public String toString() {
+        return "Coda serpente: " + (this.coda+1) + " testa serpente: " + (this.getTesta()+1);
     }
 }

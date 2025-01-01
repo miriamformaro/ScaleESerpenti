@@ -21,7 +21,6 @@ public class GUI extends JFrame implements Observer {
     private List<Player> players;
     private List<JLabel> pedine;
     private String messaggio = ""; // Inizializzazione di messaggio
-    private CaselleSpeciali tipo;
 
     public GUI() {
         super("Scale e serpenti");
@@ -36,7 +35,6 @@ public class GUI extends JFrame implements Observer {
         if (subject instanceof Player) {
             Player player = (Player) subject;
 
-            // Inizia il messaggio del turno corrente
             StringBuilder messaggioTurno = new StringBuilder();
 
             // Messaggio iniziale (dado o dadi)
@@ -51,26 +49,24 @@ public class GUI extends JFrame implements Observer {
                 }
             }
 
-            // Messaggio posizione iniziale
             int posizione = player.getPosizione();
             messaggioTurno.append("Giocatore ").append(player.getId() + 1).append(" è arrivato sulla casella ").append(posizione + 1).append("\n");
 
-            // Sincronizza movimenti e messaggi per eventuali azioni a catena
             sincronizzaMovimenti(player, messaggioTurno);
 
+            int overflow = 0;
             if ((posizione + 1) == (tabellonePanel.getBoard().getUltimaCasella() + 1)) {
                 messaggioTurno.append("Il giocatore ").append(player.getId() + 1).append(" ha vinto!");
             } else if ((posizione + 1) > tabellonePanel.getBoard().getUltimaCasella()) {
-                int overflow = (posizione + 1) - tabellonePanel.getBoard().getUltimaCasella();
+                overflow = (posizione + 1) - tabellonePanel.getBoard().getUltimaCasella();
                 posizione = 1 + (tabellonePanel.getBoard().getUltimaCasella() - overflow);
                 player.setPosizione(posizione);
                 messaggioTurno.append("Il giocatore ").append(player.getId() + 1).append(" deve indietreggiare di ").append(overflow).append(" caselle e arriva alla casella ").append(posizione + 1).append("\n");
 
-                // Sincronizza i movimenti anche quando il giocatore indietreggia e arriva su una casella speciale
                 sincronizzaMovimenti(player, messaggioTurno);
             }
 
-            if (!dialog.getUnDado() && player.getD().getDado1() == 6 && player.getD().getDado2() == 6 && (posizione+1)<(tabellonePanel.getBoard().getUltimaCasella()+1)) {
+            if (!dialog.getUnDado() && player.getD().getDado1() == 6 && player.getD().getDado2() == 6 && (posizione+1)<((tabellonePanel.getBoard().getUltimaCasella()+1)-overflow)) {
                 messaggioTurno.append("Il giocatore ").append(player.getId() + 1).append(" ha ottenuto un doppio 6 e ha diritto a un altro turno!\n");
                 sincronizzaMovimenti(player, messaggioTurno);
             }
@@ -110,7 +106,7 @@ public class GUI extends JFrame implements Observer {
                 // Gestione casella premio
                 if (casella.getTipo() == CaselleSpeciali.DADI) {
                     casella.esegui(player);
-                    messaggioTurno.append(" - Casella premio 'DADI'. Rilancia i dadi e avanza di " + ((CasellaPremio) casella).getAvanzamento() + " caselle!\n");
+                    messaggioTurno.append(" - Casella premio 'DADI'. Rilancia i dadi e avanza di " + ((CasellaPremio) casella).getAvanzamento() + " caselle!\nNuova posizione: " + (player.getPosizione()+1) + "\n");
                     azioneInCorso = true;
                 } else if(casella.getTipo() == CaselleSpeciali.MOLLA){
                     casella.esegui(player);
@@ -126,7 +122,15 @@ public class GUI extends JFrame implements Observer {
                     }
 
                 } else {
-                    messaggioTurno.append(" - Casella locanda. Sosta per tre turni!\n");
+                    if (player.getMettereCartaDaParte() == 1) {
+                        messaggioTurno.append(" - Casella locanda. Il giocatore ha una carta 'DIVIETO DI SOSTA' quindi sosta un turno in meno!\n");
+                    } else if(player.getMettereCartaDaParte() == 2) {
+                        messaggioTurno.append(" - Casella locanda. Il giocatore ha due carte 'DIVIETO DI SOSTA' quindi sosta solo per un turno!\n");
+                    } else if(player.getMettereCartaDaParte() == 3) {
+                        messaggioTurno.append(" - Casella locanda. Il giocatore ha tre carte 'DIVIETO DI SOSTA' quindi continua a giocare al prossimo turno!\n");
+                    } else {
+                        messaggioTurno.append(" - Casella locanda. Sosta per tre turni!\n");
+                    }
                 }
             } else if (casella instanceof CasellaPescaUnaCarta) {
                 // Gestione casella pesca una carta
@@ -142,10 +146,14 @@ public class GUI extends JFrame implements Observer {
                         messaggioTurno.append("- Carta pescata: 'PANCHINA'. Sosta per un turno!\n");
                     }
                 } else if (casella.getTipo() == CaselleSpeciali.LOCANDA) {
-                    if(player.getMettereCartaDaParte() > 0) {
-                        messaggioTurno.append("- Carta pescata: 'LOCANDA'. Il giocatore ha una carta 'DIVIETO DI SOSTA' quindi sosta un turno in meno!\n");
+                    if (player.getMettereCartaDaParte() == 1) {
+                        messaggioTurno.append(" - Casella locanda. Il giocatore ha una carta 'DIVIETO DI SOSTA' quindi sosta un turno in meno!\n");
+                    } else if(player.getMettereCartaDaParte() == 2) {
+                        messaggioTurno.append(" - Casella locanda. Il giocatore ha due carte 'DIVIETO DI SOSTA' quindi sosta solo per un turno!\n");
+                    } else if(player.getMettereCartaDaParte() == 3) {
+                        messaggioTurno.append(" - Casella locanda. Il giocatore ha tre carte 'DIVIETO DI SOSTA' quindi continua a giocare al prossimo turno!\n");
                     } else {
-                        messaggioTurno.append("- Carta pescata: 'LOCANDA'. Sosta per tre turni!\n");
+                        messaggioTurno.append(" - Casella locanda. Sosta per tre turni!\n");
                     }
                 } else if (casella.getTipo()== CaselleSpeciali.DIVIETO_DI_SOSTA){
                     messaggioTurno.append("- Carta pescata: 'DIVIETO DI SOSTA'. Questa carta ti fa sostare un turno in meno se vai sulla casella 'PANCHINA' o 'LOCANDA'!\n");
@@ -158,7 +166,6 @@ public class GUI extends JFrame implements Observer {
                 azioneInCorso = false;
             }
 
-            // Se la posizione è cambiata, aggiorna la casella
             if (azioneInCorso) {
                 int nuovaPosizione = player.getPosizione();
                 casella = tabellonePanel.getBoard().getCasella(nuovaPosizione);
@@ -188,7 +195,10 @@ public class GUI extends JFrame implements Observer {
         add(scrollPane, BorderLayout.WEST);
 
         messaggio = "Numero di giocatori scelti: " + dialog.getNumeroGiocatori() +
-                "\nNumero di dadi scelti: " + dialog.getNumeroDadi() + "\n";
+                "\nNumero di dadi scelti: " + dialog.getNumeroDadi() + "\n" + "Leggenda caselle: \nCasella verde: testa del serpente\n" +
+                "Casella grigia: base della scala\nCasella gialla: casella premio 'DADI'\nCasella rosa: casella premio 'MOLLA'\n" +
+                "Casella arancione: casella sosta 'PANCHINA'\nCasella rossa: casella sosta 'LOCANDA'\nCasella celeste: casella 'PESCA UNA CARTA'\n" +
+                board.getSerpente() + board.getScala() + "\n";
         areaMovimenti.append(messaggio);
 
         revalidate();
@@ -217,7 +227,6 @@ public class GUI extends JFrame implements Observer {
                     ex.printStackTrace();
                 }
 
-                // Rimuovi la pedina dalla sua casella precedente
                 for (Component c : tabellonePanel.getComponents()) {
                     if (c instanceof JPanel) {
                         for (Component comp : ((JPanel) c).getComponents()) {
@@ -228,7 +237,6 @@ public class GUI extends JFrame implements Observer {
                     }
                 }
 
-                // Aggiungi la pedina alla nuova casella
                 JPanel nuovaCasella = (JPanel) tabellonePanel.getComponent(nuovaPosizione);
                 nuovaCasella.add(pedina);
 

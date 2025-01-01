@@ -15,17 +15,17 @@ public class Dado {
     public int eseguiLancio() {
         dado1 = rand.nextInt(6) + 1;
         if(dado) {
-            System.out.println("Dado: " + dado1);
+            //System.out.println("Dado: " + dado1);
             return dado1;
         }
         dado2 = rand.nextInt(6) + 1;
-        System.out.println("Dado1: " + dado1 + ", Dado2: " + dado2);
+        //System.out.println("Dado1: " + dado1 + ", Dado2: " + dado2);
         return dado1 + dado2;
     }
 
     public int eseguiLancioSingolo() {
         dado1 = rand.nextInt(6) + 1;
-        System.out.println("Dado: " + dado1);
+        //System.out.println("Dado: " + dado1);
         return dado1;
     }
 
