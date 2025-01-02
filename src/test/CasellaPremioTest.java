@@ -21,7 +21,7 @@ class CasellaPremioTest {
 
     @BeforeEach
     void setup() {
-        dado = new Dado(true);  // Usa il dado originale, che potrebbe essere casuale
+        dado = new Dado(true);
         player = new Player(1, true);
         player.setPosizione(0);
         board = new Board(36, null);

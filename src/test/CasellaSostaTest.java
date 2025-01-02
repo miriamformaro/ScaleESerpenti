@@ -43,7 +43,7 @@ class CasellaSostaTest {
     @Test
     @DisplayName("Test Effetto CasellaSosta PANCHINA senza carta")
     void testEffettoCasellaSostaPanchinaSenzaCarta() {
-        player.setPosizione(0);
+        player.setPosizione(5);
         player.setMettereCartaDaParte(0);
         casellaSostaPanchina.esegui(player);
 
@@ -53,7 +53,7 @@ class CasellaSostaTest {
     @Test
     @DisplayName("Test Effetto CasellaSosta PANCHINA con carta")
     void testEffettoCasellaSostaPanchinaConCarta() {
-        player.setPosizione(0);
+        player.setPosizione(5);
         player.setMettereCartaDaParte(1);
         casellaSostaPanchina.esegui(player);
 
@@ -63,7 +63,7 @@ class CasellaSostaTest {
     @Test
     @DisplayName("Test Effetto CasellaSosta LOCANDA con 0 carte")
     void testEffettoCasellaSostaLocandaZeroCarte() {
-        player.setPosizione(5);
+        player.setPosizione(10);
         player.setMettereCartaDaParte(0);
         casellaSostaLocanda.esegui(player);
 
@@ -73,7 +73,7 @@ class CasellaSostaTest {
     @Test
     @DisplayName("Test Effetto CasellaSosta LOCANDA con 1 carta")
     void testEffettoCasellaSostaLocandaCon1Carta() {
-        player.setPosizione(5);
+        player.setPosizione(10);
         player.setMettereCartaDaParte(1);
         casellaSostaLocanda.esegui(player);
 
@@ -83,7 +83,7 @@ class CasellaSostaTest {
     @Test
     @DisplayName("Test Effetto CasellaSosta LOCANDA con 2 carte")
     void testEffettoCasellaSostaLocandaCon2Carte() {
-        player.setPosizione(5);
+        player.setPosizione(10);
         player.setMettereCartaDaParte(2);
         casellaSostaLocanda.esegui(player);
 
@@ -93,7 +93,7 @@ class CasellaSostaTest {
     @Test
     @DisplayName("Test Effetto CasellaSosta LOCANDA con 3 carte")
     void testEffettoCasellaSostaLocandaCon3Carte() {
-        player.setPosizione(5);
+        player.setPosizione(10);
         player.setMettereCartaDaParte(3);
         casellaSostaLocanda.esegui(player);
 
