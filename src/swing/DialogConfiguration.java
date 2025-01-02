@@ -568,15 +568,6 @@ public class DialogConfiguration extends JFrame{
             }
 
             board = new Board(numeroCaselle, strategy);
-            if(strategy instanceof GestioneUtenteStrategy) {
-                for(CasellaSerpente i : listaSerpenti) {
-                    board.aggiungiSerpente(i);
-                }
-
-                for(CasellaScala i : listaScale) {
-                    board.aggiungiScala(i);
-                }
-            }
             board.applicaStrategia();
             getContentPane().removeAll();
 

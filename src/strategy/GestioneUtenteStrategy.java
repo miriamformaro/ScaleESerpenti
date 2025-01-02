@@ -47,6 +47,10 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
             board.getCaselleUsate().add(coda);
         }
 
+        for(CasellaSerpente i : listaSerpenti) {
+            board.aggiungiSerpente(i);
+        }
+
         //int numeroScale = ottieniNumero("Quanti scale vuoi inserire? ");
         for(int i=0; i<listaScale.size(); i++) {
             int inizio;
@@ -62,6 +66,10 @@ public class GestioneUtenteStrategy implements GestioneBoardStrategy {
             board.aggiungiCasella(CaselleSpeciali.SCALA, inizio, fine);
             board.getCaselleUsate().add(inizio);
             board.getCaselleUsate().add(fine);
+        }
+
+        for(CasellaScala i : listaScale) {
+            board.aggiungiScala(i);
         }
 
         aggiungi(CaselleSpeciali.PANCHINA, board, panchina);
