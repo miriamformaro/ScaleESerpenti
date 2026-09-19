@@ -6,7 +6,7 @@ Il progetto consiste in un simulatore digitale del celebre gioco da tavolo "Scal
 
 ---
 
-## ✨ Funzionalità Principali (Features)
+## Funzionalità principali (Features)
 
 Il sistema offre un'ampia gamma di opzioni di personalizzazione tramite un'interfaccia grafica (GUI) intuitiva:
 
@@ -20,7 +20,7 @@ Il sistema offre un'ampia gamma di opzioni di personalizzazione tramite un'inter
 
 ---
 
-## 🏗️ Architettura e Ingegneria del Software (Design Patterns)
+## Architettura e ingegneria del software (Design Patterns)
 
 L'applicativo è stato sviluppato in **Java**, ponendo una forte enfasi sulla corretta progettazione architetturale e sull'utilizzo dei **Design Pattern (GoF)** per garantire manutenibilità, estendibilità e disaccoppiamento del codice:
 
@@ -38,7 +38,7 @@ L'applicativo è stato sviluppato in **Java**, ponendo una forte enfasi sulla co
 
 ---
 
-## 🗺️ Legenda delle Caselle Speciali
+## Legenda delle caselle speciali
 
 Il tabellone è arricchito da caselle speciali colorate, ciascuna con effetti specifici sul giocatore che vi atterra:
 
@@ -56,5 +56,5 @@ Il tabellone è arricchito da caselle speciali colorate, ciascuna con effetti sp
 
 ---
 
-## 🚀 Come Eseguire il Progetto
+## 🚀 Come eseguire il progetto
 Per l'esecuzione del progetto eseguire la classe "GUI" all'interno del package swing.
